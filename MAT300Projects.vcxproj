@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\libs\glew;$(ProjectDir)\libs\SDL2\include;$(ProjectDir)\Engine;$(ProjectDir)\libs\glm;$(ProjectDir)\common_gl;$(ProjectDir)\libs\imgui;$(ProjectDir)\Project;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\libs\glew;$(ProjectDir)\libs\SDL2\include;$(ProjectDir)\Engine;$(ProjectDir)\libs\glm;$(ProjectDir)\common_gl;$(ProjectDir)\libs\imgui;$(ProjectDir)\Project;$(ProjectDir)\libs\implot;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -123,7 +123,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)\libs\glew;$(ProjectDir)\libs\SDL2\include;$(ProjectDir)\Engine;$(ProjectDir)\libs\glm;$(ProjectDir)\common_gl;$(ProjectDir)\libs\imgui;$(ProjectDir)\Project;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\libs\glew;$(ProjectDir)\libs\SDL2\include;$(ProjectDir)\Engine;$(ProjectDir)\libs\glm;$(ProjectDir)\common_gl;$(ProjectDir)\libs\imgui;$(ProjectDir)\Project;$(ProjectDir)\libs\implot;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>

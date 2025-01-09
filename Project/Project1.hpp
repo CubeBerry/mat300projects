@@ -14,4 +14,6 @@ public:
 	void End() override;
 
 private:
+	float x_data[5] = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f };
+	float y_data[5] = { 2.0f, 3.0f, 5.0f, 7.0f, 11.0f };
 };
