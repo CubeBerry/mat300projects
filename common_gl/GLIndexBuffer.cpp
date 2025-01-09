@@ -1,6 +1,3 @@
-//Author: JEYOON YU
-//Project: CubeEngine
-//File: GLIndexBuffer.cpp
 #include "GLIndexBuffer.hpp"
 
 #include "glCheck.hpp"

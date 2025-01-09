@@ -1,5 +1,5 @@
 #include "glCheck.hpp"
-#include <glew/glew.h>
+#include <glew.h>
 #include <cassert>
 #include <iostream>
 #include <string>

@@ -104,7 +104,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\libs\glew;$(ProjectDir)\libs\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\libs\glew;$(ProjectDir)\libs\SDL2\include;$(ProjectDir)\Engine;$(ProjectDir)\libs\glm;$(ProjectDir)\common_gl;$(ProjectDir)\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,7 +123,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)\libs\glew;$(ProjectDir)\libs\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\libs\glew;$(ProjectDir)\libs\SDL2\include;$(ProjectDir)\Engine;$(ProjectDir)\libs\glm;$(ProjectDir)\common_gl;$(ProjectDir)\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -136,7 +137,52 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="common_gl\glCheck.cpp" />
+    <ClCompile Include="common_gl\GLImGuiManager.cpp" />
+    <ClCompile Include="common_gl\GLIndexBuffer.cpp" />
+    <ClCompile Include="common_gl\GLShader.cpp" />
+    <ClCompile Include="common_gl\GLVertexArray.cpp" />
+    <ClCompile Include="common_gl\GLVertexBuffer.cpp" />
+    <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Engine\GameStateManager.cpp" />
+    <ClCompile Include="Engine\GLRenderManager.cpp" />
+    <ClCompile Include="Engine\RenderManager.cpp" />
+    <ClCompile Include="Engine\Window.cpp" />
+    <ClCompile Include="libs\imgui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="libs\imgui\backends\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="libs\imgui\imgui.cpp" />
+    <ClCompile Include="libs\imgui\imgui_demo.cpp" />
+    <ClCompile Include="libs\imgui\imgui_draw.cpp" />
+    <ClCompile Include="libs\imgui\imgui_tables.cpp" />
+    <ClCompile Include="libs\imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common_gl\glCheck.hpp" />
+    <ClInclude Include="common_gl\GLImGuiManager.hpp" />
+    <ClInclude Include="common_gl\GLIndexBuffer.hpp" />
+    <ClInclude Include="common_gl\GLShader.hpp" />
+    <ClInclude Include="common_gl\GLUniformBuffer.hpp" />
+    <ClInclude Include="common_gl\GLVertexArray.hpp" />
+    <ClInclude Include="common_gl\GLVertexBuffer.hpp" />
+    <ClInclude Include="Engine\Engine.hpp" />
+    <ClInclude Include="Engine\GameState.hpp" />
+    <ClInclude Include="Engine\GameStateManager.hpp" />
+    <ClInclude Include="Engine\GLRenderManager.hpp" />
+    <ClInclude Include="Engine\Material.hpp" />
+    <ClInclude Include="Engine\RenderManager.hpp" />
+    <ClInclude Include="Engine\Timer.hpp" />
+    <ClInclude Include="Engine\Window.hpp" />
+    <ClInclude Include="libs\imgui\backends\imgui_impl_opengl3.h" />
+    <ClInclude Include="libs\imgui\backends\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="libs\imgui\backends\imgui_impl_sdl2.h" />
+    <ClInclude Include="libs\imgui\backends\imgui_impl_vulkan.h" />
+    <ClInclude Include="libs\imgui\imconfig.h" />
+    <ClInclude Include="libs\imgui\imgui.h" />
+    <ClInclude Include="libs\imgui\imgui_internal.h" />
+    <ClInclude Include="libs\imgui\imstb_rectpack.h" />
+    <ClInclude Include="libs\imgui\imstb_textedit.h" />
+    <ClInclude Include="libs\imgui\imstb_truetype.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

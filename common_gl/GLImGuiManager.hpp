@@ -1,6 +1,3 @@
-//Author: JEYOON YU
-//Project: CubeEngine
-//File: GLImGuiManager.hpp
 #pragma once
 #include <SDL.h>
 

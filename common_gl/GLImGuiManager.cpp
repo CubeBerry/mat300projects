@@ -1,6 +1,3 @@
-//Author: JEYOON YU
-//Project: CubeEngine
-//File: GLImGuiManager.cpp
 #include "GLImGuiManager.hpp"
 #include "imgui.h"
 #include "backends/imgui_impl_sdl2.h"

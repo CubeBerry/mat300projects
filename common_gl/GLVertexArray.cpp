@@ -1,6 +1,3 @@
-//Author: JEYOON YU
-//Project: CubeEngine
-//File: GLVertexArray.cpp
 #include "GLVertexArray.hpp"
 
 #include "glCheck.hpp"

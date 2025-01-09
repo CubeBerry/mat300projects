@@ -1,6 +1,3 @@
-//Author: JEYOON YU
-//Project: CubeEngine
-//File: GLVertexBuffer.cpp
 #include "GLVertexBuffer.hpp"
 
 #include "glCheck.hpp"

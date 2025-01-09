@@ -1,7 +1,3 @@
-//Author: JEYOON YU
-//Second Author: DOYEONG LEE
-//Project: CubeEngine
-//File: GLShader.hpp
 #include "GLShader.hpp"
 #include <fstream>
 #include <iostream>

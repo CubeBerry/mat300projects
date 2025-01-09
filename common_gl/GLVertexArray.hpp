@@ -1,8 +1,5 @@
-﻿//Author: JEYOON YU
-//Project: CubeEngine
-//File: GLVertexArray.hpp
-#pragma once
-#include "glew/glew.h"
+﻿#pragma once
+#include "glew.h"
 #include "GLVertexBuffer.hpp"
 #include "GLIndexBuffer.hpp"
 #include <vector>

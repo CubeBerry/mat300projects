@@ -1,9 +1,5 @@
-//Author: JEYOON YU
-//Second Author: DOYEONG LEE
-//Project: CubeEngine
-//File: GLUniformBuffer.hpp
 #pragma once
-#include "glew/glew.h"
+#include "glew.h"
 #include "glCheck.hpp"
 
 #include <vector>
