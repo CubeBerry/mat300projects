@@ -55,12 +55,6 @@ private:
 	GLUniformBuffer<ThreeDimension::FragmentUniform>* fragmentUniform3D{ nullptr };
 	GLUniformBuffer<ThreeDimension::Material>* fragmentMaterialUniformBuffer{ nullptr };
 
-#ifdef _DEBUG
-	GLVertexArray normalVertexArray;
-	GLVertexBuffer* normalVertexBuffer{ nullptr };
-	GLShader glNormal3DShader;
-#endif
-
 	//Lighting
 	GLUniformBuffer<ThreeDimension::DirectionalLightUniform>* directionalLightUniformBuffer{ nullptr };
 	GLUniformBuffer<ThreeDimension::PointLightUniform>* pointLightUniformBuffer{ nullptr };

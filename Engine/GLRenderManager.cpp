@@ -22,15 +22,9 @@ void GLRenderManager::Initialize(
 )
 {
 	vertexArray.Initialize();
-#ifdef _DEBUG
-	normalVertexArray.Initialize();
-#endif
 
-	gl2DShader.LoadShader({ { GLShader::VERTEX, "../Engine/shader/2D.vert" }, { GLShader::FRAGMENT, "../Engine/shader/2D.frag" } });
-	gl3DShader.LoadShader({ { GLShader::VERTEX, "../Engine/shader/3D.vert" }, { GLShader::FRAGMENT, "../Engine/shader/3D.frag" } });
-#ifdef _DEBUG
-	glNormal3DShader.LoadShader({ { GLShader::VERTEX, "../Engine/shader/Normal3D.vert" }, { GLShader::FRAGMENT, "../Engine/shader/Normal3D.frag" } });
-#endif
+	gl2DShader.LoadShader({ { GLShader::VERTEX, "./shaders/2D.vert" }, { GLShader::FRAGMENT, "./shaders/2D.frag" } });
+	gl3DShader.LoadShader({ { GLShader::VERTEX, "./shaders/3D.vert" }, { GLShader::FRAGMENT, "./shaders/3D.frag" } });
 
 	vertexUniform2D = new GLUniformBuffer<TwoDimension::VertexUniform>();
 	vertexUniform2D->InitUniform(gl2DShader.GetProgramHandle(), 0, "vUniformMatrix", 0, nullptr);
@@ -127,17 +121,6 @@ void GLRenderManager::BeginRender(glm::vec3 bgColor)
 		break;
 	}
 
-#ifdef _DEBUG
-	if (isDrawNormals)
-	{
-		glNormal3DShader.Use(true);
-		normalVertexArray.Use(true);
-		glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(normalVertices3D.size()));
-		normalVertexArray.Use(false);
-		glNormal3DShader.Use(false);
-	}
-#endif
-
 	imguiManager->Begin();
 }
 
@@ -232,11 +215,6 @@ void GLRenderManager::DeleteWithIndex(int id)
 			break;
 		case RenderType::ThreeDimension:
 			vertices3D.erase(end(vertices3D) - *verticesPerMesh.begin(), end(vertices3D));
-#ifdef _DEBUG
-			normalVertices3D.erase(end(normalVertices3D) - *normalVerticesPerMesh.begin(), end(normalVertices3D));
-			delete normalVertexBuffer;
-			normalVertexBuffer = nullptr;
-#endif
 			break;
 		}
 		delete vertexBuffer;
@@ -257,9 +235,6 @@ void GLRenderManager::DeleteWithIndex(int id)
 		if (rMode == RenderType::ThreeDimension)
 		{
 			verticesPerMesh.erase(verticesPerMesh.begin());
-#ifdef _DEBUG
-			normalVerticesPerMesh.erase(normalVerticesPerMesh.begin());
-#endif
 			indicesPerMesh.erase(indicesPerMesh.begin());
 		}
 
@@ -333,22 +308,6 @@ void GLRenderManager::DeleteWithIndex(int id)
 		glCheck(glNamedBufferSubData(indexBuffer->GetHandle(), 0, sizeof(uint32_t) * indices.size(), indices.data()));
 		indexBuffer->SetCount(static_cast<int>(indices.size()));
 		vertexArray.SetIndexBuffer(std::move(*indexBuffer));
-
-#ifdef _DEBUG
-		beginCount = 0;
-		for (int vn = 0; vn < id; ++vn)
-		{
-			beginCount += normalVerticesPerMesh[vn];
-		}
-
-		normalVertices3D.erase(begin(normalVertices3D) + beginCount, begin(normalVertices3D) + beginCount + normalVerticesPerMesh[id]);
-		for (auto it = normalVertices3D.begin() + beginCount; it != normalVertices3D.end(); ++it)
-		{
-			it->index--;
-		}
-
-		glCheck(glNamedBufferSubData(normalVertexBuffer->GetHandle(), 0, static_cast<GLsizei>(sizeof(ThreeDimension::NormalVertex)* normalVertices3D.size()), normalVertices3D.data()));
-#endif
 		break;
 	}
 
@@ -356,9 +315,6 @@ void GLRenderManager::DeleteWithIndex(int id)
 	{
 		verticesPerMesh.erase(verticesPerMesh.begin() + id);
 		indicesPerMesh.erase(indicesPerMesh.begin() + id);
-#ifdef _DEBUG
-		normalVerticesPerMesh.erase(normalVerticesPerMesh.begin() + id);
-#endif
 	}
 
 	switch (rMode)
@@ -391,10 +347,6 @@ void GLRenderManager::LoadMesh(MeshType type, const std::filesystem::path& path,
 		delete vertexBuffer;
 	vertexBuffer = new GLVertexBuffer;
 	vertexBuffer->SetData(static_cast<GLsizei>(sizeof(ThreeDimension::Vertex) * vertices3D.size()), vertices3D.data());
-#ifdef _DEBUG
-	normalVertexBuffer = new GLVertexBuffer;
-	normalVertexBuffer->SetData(static_cast<GLsizei>(sizeof(ThreeDimension::NormalVertex) * normalVertices3D.size()), normalVertices3D.data());
-#endif
 
 	if (indexBuffer != nullptr)
 		delete indexBuffer;
@@ -441,37 +393,6 @@ void GLRenderManager::LoadMesh(MeshType type, const std::filesystem::path& path,
 
 	vertexArray.AddVertexBuffer(std::move(*vertexBuffer), sizeof(ThreeDimension::Vertex), { position_layout, normal_layout, uv_layout, index_layout });
 	vertexArray.SetIndexBuffer(std::move(*indexBuffer));
-#ifdef _DEBUG
-	//Attributes
-	GLAttributeLayout normal_position_layout;
-	normal_position_layout.component_type = GLAttributeLayout::Float;
-	normal_position_layout.component_dimension = GLAttributeLayout::_3;
-	normal_position_layout.normalized = false;
-	normal_position_layout.vertex_layout_location = 0;
-	normal_position_layout.stride = sizeof(ThreeDimension::NormalVertex);
-	normal_position_layout.offset = 0;
-	normal_position_layout.relative_offset = offsetof(ThreeDimension::NormalVertex, position);
-
-	GLAttributeLayout normal_color_layout;
-	normal_color_layout.component_type = GLAttributeLayout::Float;
-	normal_color_layout.component_dimension = GLAttributeLayout::_4;
-	normal_color_layout.normalized = false;
-	normal_color_layout.vertex_layout_location = 1;
-	normal_color_layout.stride = sizeof(ThreeDimension::NormalVertex);
-	normal_color_layout.offset = 0;
-	normal_color_layout.relative_offset = offsetof(ThreeDimension::NormalVertex, color);
-
-	GLAttributeLayout normal_index_layout;
-	normal_index_layout.component_type = GLAttributeLayout::Int;
-	normal_index_layout.component_dimension = GLAttributeLayout::_1;
-	normal_index_layout.normalized = false;
-	normal_index_layout.vertex_layout_location = 2;
-	normal_index_layout.stride = sizeof(ThreeDimension::NormalVertex);
-	normal_index_layout.offset = 0;
-	normal_index_layout.relative_offset = offsetof(ThreeDimension::NormalVertex, index);
-
-	normalVertexArray.AddVertexBuffer(std::move(*normalVertexBuffer), sizeof(ThreeDimension::NormalVertex), { normal_position_layout, normal_color_layout, normal_index_layout });
-#endif
 
 	ThreeDimension::VertexUniform mat;
 	mat.model = glm::mat4(1.f);

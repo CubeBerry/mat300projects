@@ -11,6 +11,7 @@ public:
 
 	static Engine& Instance() { static Engine instance; return instance; }
 	static Window& GetWindow() { return Instance().window; }
+	static GameStateManager& GetGameStateManager() { return Instance().gameStateManger; }
 	static RenderManager* GetRenderManager() { return Instance().renderManager; }
 
 	void Init(const char* title, int windowWidth, int windowHeight, bool fullScreen, WindowMode mode);

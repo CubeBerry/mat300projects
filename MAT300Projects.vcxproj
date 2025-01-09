@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\libs\glew;$(ProjectDir)\libs\SDL2\include;$(ProjectDir)\Engine;$(ProjectDir)\libs\glm;$(ProjectDir)\common_gl;$(ProjectDir)\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\libs\glew;$(ProjectDir)\libs\SDL2\include;$(ProjectDir)\Engine;$(ProjectDir)\libs\glm;$(ProjectDir)\common_gl;$(ProjectDir)\libs\imgui;$(ProjectDir)\Project;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -123,7 +123,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)\libs\glew;$(ProjectDir)\libs\SDL2\include;$(ProjectDir)\Engine;$(ProjectDir)\libs\glm;$(ProjectDir)\common_gl;$(ProjectDir)\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\libs\glew;$(ProjectDir)\libs\SDL2\include;$(ProjectDir)\Engine;$(ProjectDir)\libs\glm;$(ProjectDir)\common_gl;$(ProjectDir)\libs\imgui;$(ProjectDir)\Project;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -156,6 +156,7 @@
     <ClCompile Include="libs\imgui\imgui_tables.cpp" />
     <ClCompile Include="libs\imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Project\Project1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common_gl\glCheck.hpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="libs\imgui\imstb_rectpack.h" />
     <ClInclude Include="libs\imgui\imstb_textedit.h" />
     <ClInclude Include="libs\imgui\imstb_truetype.h" />
+    <ClInclude Include="Project\Project1.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

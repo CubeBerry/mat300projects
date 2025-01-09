@@ -328,21 +328,6 @@ void RenderManager::CreateMesh(MeshType type, const std::filesystem::path& path,
 	break;
 	}
 
-#ifdef _DEBUG
-	std::vector<ThreeDimension::NormalVertex> tempNormalVertices;
-	for (size_t v = 0; v < tempVertices.size(); ++v)
-	{
-		glm::vec3 start = tempVertices[v].position;
-		glm::vec3 end = tempVertices[v].position + tempVertices[v].normal * 0.1f;
-
-		tempNormalVertices.push_back(ThreeDimension::NormalVertex{ start, glm::vec4{1.f}, static_cast<int>(quadCount) });
-		tempNormalVertices.push_back(ThreeDimension::NormalVertex{ end, glm::vec4{1.f}, static_cast<int>(quadCount) });
-	}
-
-	normalVerticesPerMesh.push_back(static_cast<unsigned int>(tempNormalVertices.size()));
-	normalVertices3D.insert(normalVertices3D.end(), tempNormalVertices.begin(), tempNormalVertices.end());
-#endif
-
 	if (type != MeshType::OBJ)
 	{
 		verticesPerMesh.push_back(static_cast<unsigned int>(tempVertices.size()));
