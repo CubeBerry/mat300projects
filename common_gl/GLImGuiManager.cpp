@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+#include "../libs/implot/implot.h"
+
 GLImGuiManager::GLImGuiManager(SDL_Window* window_, SDL_GLContext context_)
 {
 	Initialize(window_, context_);
@@ -19,6 +21,7 @@ void GLImGuiManager::Initialize(SDL_Window* window_, SDL_GLContext context_)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+	ImPlot::CreateContext();
 	//ImGuiIO& io = ImGui::GetIO();
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
@@ -56,5 +59,6 @@ void GLImGuiManager::Shutdown()
 {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
+	ImPlot::DestroyContext();
 	ImGui::DestroyContext();
 }
