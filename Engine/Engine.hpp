@@ -17,8 +17,6 @@ public:
 	void Init(const char* title, int windowWidth, int windowHeight, bool fullScreen, WindowMode mode);
 	void Update();
 	void End();
-
-	void ResetDeltaTime();
 private:
 	float deltaTime = 0.f;
 
