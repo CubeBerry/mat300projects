@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 #include "GameState.hpp"
 
 class Project1 : public GameState
@@ -14,6 +16,38 @@ public:
 	void End() override;
 
 private:
-	float x_data[5] = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f };
-	float y_data[5] = { 2.0f, 3.0f, 5.0f, 7.0f, 11.0f };
+	int degree{ 1 };
+	std::vector<double> a{2, 1.0};
+
+
+	static int BinomialCoefficient(int n, int k)
+	{
+		int result{ 1 };
+
+		if (k > n - k) k = n - k;
+
+		for (int i = 0; i < k; ++i)
+		{
+			result *= (n - i);
+			result /= (i + 1);
+		}
+		return result;
+	}
+
+	double DeCasteljau(const std::vector<double>& cp, double t)
+	{
+		int degree = static_cast<int>(cp.size()) - 1;
+
+		std::vector<double> temp(cp.begin(), cp.end());
+
+		for (int i = 1; i <= degree; ++i)
+		{
+			for (int j = 0; j <= degree - i; ++j)
+			{
+				temp[j] = (1.0 - t) * temp[j] + t * temp[j + 1];
+			}
+		}
+
+		return temp[0];
+	}
 };

@@ -18,11 +18,28 @@ void Project1::ImGuiDraw(float /*dt*/)
 	ImGui::SetNextWindowSize(ImVec2(io.DisplaySize.x, io.DisplaySize.y - 20));
 
 	ImGui::Begin("Graph", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
-	if (ImPlot::BeginPlot("Sample Plot", ImVec2(-1, -1)))
+
+	// Degree Control
+	ImGui::Text("Degree: ");
+	ImGui::SameLine();
+	ImGui::Text("%d", degree);
+	ImGui::SameLine();
+	if (ImGui::SmallButton("-"))
 	{
-		ImPlot::PlotLine("y = f(x)", x_data, y_data, 5);
-		ImPlot::EndPlot();
+		if (degree > 0) degree--;
 	}
+	ImGui::SameLine();
+	if (ImGui::SmallButton("+"))
+	{
+		if (degree < 20) degree++;
+	}
+
+	// Draw Graph
+	if (ImPlot::BeginPlot("Project1", ImVec2(-1, -1)))
+	{
+		
+	}
+
 	ImGui::End();
 }
 
