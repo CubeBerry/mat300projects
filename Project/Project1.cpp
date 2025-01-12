@@ -26,18 +26,59 @@ void Project1::ImGuiDraw(float /*dt*/)
 	ImGui::SameLine();
 	if (ImGui::SmallButton("-"))
 	{
-		if (degree > 0) degree--;
+		if (degree > 1)
+		{
+			degree--;
+			a.erase(a.end() - 1);
+		}
 	}
 	ImGui::SameLine();
 	if (ImGui::SmallButton("+"))
 	{
-		if (degree < 20) degree++;
+		if (degree < 20)
+		{
+			degree++;
+			a.push_back(1.0);
+		}
 	}
 
 	// Draw Graph
 	if (ImPlot::BeginPlot("Project1", ImVec2(-1, -1)))
 	{
-		
+		ImPlot::SetupAxesLimits(0.0, 1.0, -3.0, 3.0, ImGuiCond_Always);
+
+		ImPlot::SetupAxisFormat(ImAxis_X1, "%.2f");
+		ImPlot::SetupAxisFormat(ImAxis_Y1, "%.2f");
+		ImPlot::SetupAxisLimitsConstraints(ImAxis_X1, 0.0, 1.0);
+		ImPlot::SetupAxisLimitsConstraints(ImAxis_Y1, -3.0, 3.0);
+
+		for (int i = 0; i <= degree; ++i)
+		{
+			double tPosition = i / static_cast<double>(degree);
+			double temp = tPosition;
+			ImPlot::DragPoint(i, &tPosition, &a[i], ImVec4(1.f, 0.f, 0.f, 1.f), ImPlotDragToolFlags_NoInputs);
+			tPosition = temp;
+
+			if (a[i] <= -3.0) a[i] = -3.0;
+			else if (a[i] >= 3.0) a[i] = 3.0;
+		}
+
+		std::vector<double> tValues, pValues;
+		int resolution{ 200 };
+		tValues.reserve(resolution);
+		pValues.reserve(resolution);
+		for (int n = 0; n < resolution; ++n)
+		{
+			double t = static_cast<double>(n) / (resolution - 1);
+			double val = DeCasteljau(a, t);
+
+			tValues.push_back(t);
+			pValues.push_back(val);
+		}
+
+		ImPlot::PlotLine("p(t)", tValues.data(), pValues.data(), resolution);
+
+		ImPlot::EndPlot();
 	}
 
 	ImGui::End();

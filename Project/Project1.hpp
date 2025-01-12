@@ -17,7 +17,7 @@ public:
 
 private:
 	int degree{ 1 };
-	std::vector<double> a{2, 1.0};
+	std::vector<double> a{ 1.0, 1.0 };
 
 
 	static int BinomialCoefficient(int n, int k)
