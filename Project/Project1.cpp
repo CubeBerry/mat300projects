@@ -49,7 +49,7 @@ void Project1::ImGuiDraw(float /*dt*/)
 	if (ImGui::RadioButton("BB-Form", isDeCasteljau == false)) isDeCasteljau = false;
 
 	// Draw Graph
-	if (ImPlot::BeginPlot("Project1", ImVec2(-1, -1)))
+	if (ImPlot::BeginPlot("Project1", ImVec2(ImGui::GetWindowSize().x - 55, -1)))
 	{
 		ImPlot::SetupAxesLimits(0.0, 1.0, -3.0, 3.0, ImGuiCond_Always);
 
@@ -64,6 +64,11 @@ void Project1::ImGuiDraw(float /*dt*/)
 			double temp = tPosition;
 			ImPlot::DragPoint(i, &tPosition, &a[i], ImVec4(1.f, 1.f, 1.f, 1.f), 10);
 			tPosition = temp;
+
+			ImDrawList* drawList = ImGui::GetForegroundDrawList();
+			ImVec2 cpPosition = ImPlot::PlotToPixels(ImPlotPoint(tPosition, a[i]));
+			std::string t = std::format("{:.2f}", a[i]);
+			drawList->AddText(ImVec2(cpPosition.x + 18.f, cpPosition.y - 18.f), IM_COL32(255, 255, 255, 255), t.c_str());
 
 			if (a[i] <= -3.0) a[i] = -3.0;
 			else if (a[i] >= 3.0) a[i] = 3.0;
