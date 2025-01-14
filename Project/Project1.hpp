@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <cmath>
 
 #include "GameState.hpp"
 
@@ -18,7 +19,7 @@ public:
 private:
 	int degree{ 1 };
 	std::vector<double> a{ 1.0, 1.0 };
-
+	bool isDeCasteljau{ true };
 
 	static int BinomialCoefficient(int n, int k)
 	{
@@ -32,6 +33,21 @@ private:
 			result /= (i + 1);
 		}
 		return result;
+	}
+
+	double BBForm(const std::vector<double>& cp, double t)
+	{
+		int degree = static_cast<int>(cp.size()) - 1;
+
+		double p{ 0.0 };
+		for (int i = 0; i <= degree; ++i)
+		{
+			double coefficient = BinomialCoefficient(degree, i);
+			double bernstein = coefficient * std::pow(1.0 - t, degree - i) * std::pow(t, i);
+			p += cp[i] * bernstein;
+		}
+
+		return p;
 	}
 
 	double DeCasteljau(const std::vector<double>& cp, double t)

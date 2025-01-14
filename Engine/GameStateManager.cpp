@@ -165,46 +165,46 @@ void GameStateManager::StateChanger()
 				if (ImGui::MenuItem(levelName.c_str(), std::to_string(i).c_str(), levelSelected == static_cast<GameLevel>(i)))
 				{
 					levelSelected = static_cast<GameLevel>(i);
-					showDescription = false;
+					//showDescription = false;
 				}
 			}
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Help"))
-		{
-			if (ImGui::MenuItem("How To Control"))
-			{
-				showDescription = true;
-			}
-			ImGui::EndMenu();
-		}
+		//if (ImGui::BeginMenu("Help"))
+		//{
+		//	if (ImGui::MenuItem("How To Control"))
+		//	{
+		//		showDescription = true;
+		//	}
+		//	ImGui::EndMenu();
+		//}
 
 		ImGui::EndMainMenuBar();
 	}
 
-	if (showDescription)
-	{
-		ImGui::OpenPopup("DescriptionPopup");
-		showDescription = false;
-	}
+	//if (showDescription)
+	//{
+	//	ImGui::OpenPopup("DescriptionPopup");
+	//	showDescription = false;
+	//}
 
-	if (ImGui::BeginPopup("DescriptionPopup"))
-	{
-		switch (currentLevel)
-		{
-		case GameLevel::PROJECT1:
-			ImGui::Text("PROJECT1                              ");
-			ImGui::Separator();
+	//if (ImGui::BeginPopup("DescriptionPopup"))
+	//{
+	//	switch (currentLevel)
+	//	{
+	//	case GameLevel::PROJECT1:
+	//		ImGui::Text("PROJECT1                              ");
+	//		ImGui::Separator();
 
-			ImGui::TextWrapped("Move : Arrow Keys\nMove Up/Down : Space Bar/Left Shift\nMove Camera view: Drag with Mouse Right Click\nYou can adjust the mesh's components via the control panel.");
-			if (ImGui::Button("Close"))
-			{
-				ImGui::CloseCurrentPopup();
-			}
-			break;
-		}
-		ImGui::EndPopup();
-	}
+	//		ImGui::TextWrapped("Move : Arrow Keys\nMove Up/Down : Space Bar/Left Shift\nMove Camera view: Drag with Mouse Right Click\nYou can adjust the mesh's components via the control panel.");
+	//		if (ImGui::Button("Close"))
+	//		{
+	//			ImGui::CloseCurrentPopup();
+	//		}
+	//		break;
+	//	}
+	//	ImGui::EndPopup();
+	//}
 }
 
 const char* GameStateManager::GameLevelTypeEnumToChar(GameLevel type)

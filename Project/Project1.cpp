@@ -41,6 +41,12 @@ void Project1::ImGuiDraw(float /*dt*/)
 			a.push_back(1.0);
 		}
 	}
+	ImGui::SameLine();
+	ImGui::Text("Method: ");
+	ImGui::SameLine();
+	if (ImGui::RadioButton("De Casteljau", isDeCasteljau == true)) isDeCasteljau = true;
+	ImGui::SameLine();
+	if (ImGui::RadioButton("BB-Form", isDeCasteljau == false)) isDeCasteljau = false;
 
 	// Draw Graph
 	if (ImPlot::BeginPlot("Project1", ImVec2(-1, -1)))
@@ -56,7 +62,7 @@ void Project1::ImGuiDraw(float /*dt*/)
 		{
 			double tPosition = i / static_cast<double>(degree);
 			double temp = tPosition;
-			ImPlot::DragPoint(i, &tPosition, &a[i], ImVec4(1.f, 0.f, 0.f, 1.f), ImPlotDragToolFlags_NoInputs);
+			ImPlot::DragPoint(i, &tPosition, &a[i], ImVec4(1.f, 1.f, 1.f, 1.f), 10);
 			tPosition = temp;
 
 			if (a[i] <= -3.0) a[i] = -3.0;
@@ -70,7 +76,7 @@ void Project1::ImGuiDraw(float /*dt*/)
 		for (int n = 0; n < resolution; ++n)
 		{
 			double t = static_cast<double>(n) / (resolution - 1);
-			double val = DeCasteljau(a, t);
+			double val = isDeCasteljau ? DeCasteljau(a, t) : BBForm(a, t);
 
 			tValues.push_back(t);
 			pValues.push_back(val);

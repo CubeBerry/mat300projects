@@ -53,5 +53,5 @@ private:
 	std::vector<GameState*> levelList;
 	State state = State::START;
 
-	bool showDescription = false;
+	//bool showDescription = false;
 };
