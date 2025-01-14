@@ -24,9 +24,6 @@ private:
 	static int BinomialCoefficient(int n, int k)
 	{
 		int result{ 1 };
-
-		if (k > n - k) k = n - k;
-
 		for (int i = 0; i < k; ++i)
 		{
 			result *= (n - i);
