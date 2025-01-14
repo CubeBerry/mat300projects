@@ -7,7 +7,7 @@ void Project1::Init()
 {
 }
 
-void Project1::Update(float dt)
+void Project1::Update(float /*dt*/)
 {
 }
 

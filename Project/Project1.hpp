@@ -37,8 +37,6 @@ private:
 
 	double BBForm(const std::vector<double>& cp, double t)
 	{
-		int degree = static_cast<int>(cp.size()) - 1;
-
 		double p{ 0.0 };
 		for (int i = 0; i <= degree; ++i)
 		{
@@ -52,8 +50,6 @@ private:
 
 	double DeCasteljau(const std::vector<double>& cp, double t)
 	{
-		int degree = static_cast<int>(cp.size()) - 1;
-
 		std::vector<double> temp(cp.begin(), cp.end());
 
 		for (int i = 1; i <= degree; ++i)
