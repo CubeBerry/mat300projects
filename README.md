@@ -7,9 +7,10 @@
 
 ## Program Explanation
 1. Click "Projects" button on the top-left to change projects.
-2. Calculation code used in projects are inside .hpp and .cpp files in "Project" folder.
+2. Calculation code used in projects are inside .hpp and .cpp files in "ProjectSource/Project" folder.
 
 ## Project 1
-1. Drag white circle to control points.
-2. Click + / - buttons to add or remove degrees.
-3. Click De Casteljau / BB-Form to change calculation method.
+1. A working executable is MAT300Projects.exe in "Executable" folder.
+2. Drag white circle to control points.
+3. Click + / - buttons to add or remove degrees.
+4. Click De Casteljau / BB-Form to change calculation method.
