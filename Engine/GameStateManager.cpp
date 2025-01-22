@@ -157,7 +157,7 @@ void GameStateManager::StateChanger()
 {
 	if (ImGui::BeginMainMenuBar())
 	{
-		if (ImGui::BeginMenu("Change Level"))
+		if (ImGui::BeginMenu("Projects"))
 		{
 			for (int i = 0; i < levelList.size(); i++)
 			{
