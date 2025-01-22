@@ -7,6 +7,7 @@
 
 ## Program Explanation
 1. Click "Projects" button on the top-left to change projects.
+2. Calculation code used in projects are inside .hpp and .cpp files in "Project" folder.
 
 ## Project 1
 1. Drag white circle to control points.
