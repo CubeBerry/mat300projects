@@ -97,7 +97,7 @@ void Project2::ImGuiDraw(float /*dt*/)
 			}
 			break;
 		case METHOD::MIDPOINT:
-			curvePoints = MidpointSubdivision(5);
+			curvePoints = MidpointSubdivision();
 			break;
 		}
 
