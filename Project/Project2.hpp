@@ -73,5 +73,7 @@ private:
 
 	std::vector<std::pair<double, double>> MidpointSubdivision()
 	{
+		std::vector<std::pair<double, double>> temp;
+		return temp;
 	}
 };
