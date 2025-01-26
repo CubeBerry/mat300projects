@@ -84,6 +84,9 @@
     <ClCompile Include="libs\implot\implot_items.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Project\Project2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Engine.hpp">
@@ -168,6 +171,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="libs\implot\implot_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Project2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

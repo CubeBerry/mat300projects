@@ -161,6 +161,7 @@
     <ClCompile Include="libs\implot\implot_items.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Project\Project1.cpp" />
+    <ClCompile Include="Project\Project2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common_gl\glCheck.hpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="libs\implot\implot.h" />
     <ClInclude Include="libs\implot\implot_internal.h" />
     <ClInclude Include="Project\Project1.hpp" />
+    <ClInclude Include="Project\Project2.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
