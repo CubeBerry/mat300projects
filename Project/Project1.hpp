@@ -18,7 +18,7 @@ public:
 
 private:
 	int degree{ 1 };
-	std::vector<double> a{ 1.0, 1.0 };
+	std::vector<double> controlPoints{ 1.0, 1.0 };
 	bool isDeCasteljau{ true };
 
 	static int BinomialCoefficient(int n, int k)

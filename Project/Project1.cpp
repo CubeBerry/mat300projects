@@ -29,7 +29,7 @@ void Project1::ImGuiDraw(float /*dt*/)
 		if (degree > 1)
 		{
 			degree--;
-			a.erase(a.end() - 1);
+			controlPoints.erase(controlPoints.end() - 1);
 		}
 	}
 	ImGui::SameLine();
@@ -38,7 +38,7 @@ void Project1::ImGuiDraw(float /*dt*/)
 		if (degree < 20)
 		{
 			degree++;
-			a.push_back(1.0);
+			controlPoints.push_back(1.0);
 		}
 	}
 	ImGui::SameLine();
@@ -62,16 +62,16 @@ void Project1::ImGuiDraw(float /*dt*/)
 		{
 			double tPosition = i / static_cast<double>(degree);
 			double temp = tPosition;
-			ImPlot::DragPoint(i, &tPosition, &a[i], ImVec4(1.f, 1.f, 1.f, 1.f), 10);
+			ImPlot::DragPoint(i, &tPosition, &controlPoints[i], ImVec4(1.f, 1.f, 1.f, 1.f), 10);
 			tPosition = temp;
 
 			ImDrawList* drawList = ImGui::GetForegroundDrawList();
-			ImVec2 cpPosition = ImPlot::PlotToPixels(ImPlotPoint(tPosition, a[i]));
-			std::string t = std::format("{:.2f}", a[i]);
+			ImVec2 cpPosition = ImPlot::PlotToPixels(ImPlotPoint(tPosition, controlPoints[i]));
+			std::string t = std::format("{:.2f}", controlPoints[i]);
 			drawList->AddText(ImVec2(cpPosition.x + 18.f, cpPosition.y - 18.f), IM_COL32(255, 255, 255, 255), t.c_str());
 
-			if (a[i] <= -3.0) a[i] = -3.0;
-			else if (a[i] >= 3.0) a[i] = 3.0;
+			if (controlPoints[i] <= -3.0) controlPoints[i] = -3.0;
+			else if (controlPoints[i] >= 3.0) controlPoints[i] = 3.0;
 		}
 
 		std::vector<double> tValues, pValues;
@@ -81,7 +81,7 @@ void Project1::ImGuiDraw(float /*dt*/)
 		for (int n = 0; n < resolution; ++n)
 		{
 			double t = static_cast<double>(n) / (resolution - 1);
-			double val = isDeCasteljau ? DeCasteljau(a, t) : BBForm(a, t);
+			double val = isDeCasteljau ? DeCasteljau(controlPoints, t) : BBForm(controlPoints, t);
 
 			tValues.push_back(t);
 			pValues.push_back(val);

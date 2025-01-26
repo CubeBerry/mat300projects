@@ -17,9 +17,17 @@ public:
 	void End() override;
 
 private:
-	int degree{ 1 };
-	std::vector<double> a{ 1.0, 1.0 };
-	bool isDeCasteljau{ true };
+	enum class METHOD
+	{
+		NLI,
+		BB,
+		MIDPOINT
+	};
+	METHOD method{ METHOD::NLI };
+
+	std::vector<std::pair<double, double>> controlPoints = {
+		{ 0.0, 0.0 }
+	};
 
 	static int BinomialCoefficient(int n, int k)
 	{
@@ -32,31 +40,38 @@ private:
 		return result;
 	}
 
-	double BBForm(const std::vector<double>& cp, double t)
+	std::pair<double, double> BBForm(double t)
 	{
-		double p{ 0.0 };
-		for (int i = 0; i <= degree; ++i)
+		std::pair<double, double> p{ 0.0, 0.0 };
+		int n = static_cast<int>(controlPoints.size()) - 1;
+		for (int i = 0; i <= n; ++i)
 		{
-			double coefficient = BinomialCoefficient(degree, i);
-			double bernstein = coefficient * std::pow(1.0 - t, degree - i) * std::pow(t, i);
-			p += cp[i] * bernstein;
+			double coefficient = BinomialCoefficient(n, i);
+			double bernstein = coefficient * std::pow(1.0 - t, n - i) * std::pow(t, i);
+			p.first += controlPoints[i].first * bernstein;
+			p.second += controlPoints[i].second  * bernstein;
 		}
 
 		return p;
 	}
 
-	double DeCasteljau(const std::vector<double>& cp, double t)
+	std::pair<double, double> DeCasteljau(double t)
 	{
-		std::vector<double> temp(cp.begin(), cp.end());
+		std::vector<std::pair<double, double>> temp(controlPoints.begin(), controlPoints.end());
 
-		for (int i = 1; i <= degree; ++i)
+		for (size_t i = 1; i < controlPoints.size(); ++i)
 		{
-			for (int j = 0; j <= degree - i; ++j)
+			for (size_t j = 0; j < controlPoints.size() - i; ++j)
 			{
-				temp[j] = (1.0 - t) * temp[j] + t * temp[j + 1];
+				temp[j].first = (1.0 - t) * temp[j].first + t * temp[j + 1].first;
+				temp[j].second = (1.0 - t) * temp[j].second + t * temp[j + 1].second;
 			}
 		}
 
 		return temp[0];
+	}
+
+	std::vector<std::pair<double, double>> MidpointSubdivision()
+	{
 	}
 };
