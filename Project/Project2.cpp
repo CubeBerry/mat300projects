@@ -83,17 +83,34 @@ void Project2::ImGuiDraw(float /*dt*/)
 		switch (method)
 		{
 		case METHOD::NLI:
-			for (int n = 0; n < resolution; ++n)
-			{
-				double t = static_cast<double>(n) / (resolution - 1);
-				curvePoints.push_back(BBForm(t));
-			}
-			break;
-		case METHOD::BB:
+		{
 			for (int n = 0; n < resolution; ++n)
 			{
 				double t = static_cast<double>(n) / (resolution - 1);
 				curvePoints.push_back(DeCasteljau(t));
+			}
+
+			std::vector<std::vector<std::pair<double, double>>> shells = DeCasteljauShells(shellT);
+			for (size_t i = 0; i < shells.size(); ++i)
+			{
+				std::vector<double> sx, sy;
+				for (auto& s : shells[i])
+				{
+					sx.push_back(s.first);
+					sy.push_back(s.second);
+				}
+
+				ImPlot::PushStyleVar(ImPlotStyleVar_LineWeight, 2.f);
+				ImPlot::PlotLine("Shell", sx.data(), sy.data(), static_cast<int>(sx.size()));
+				ImPlot::PopStyleVar();
+			}
+		}
+		break;
+		case METHOD::BB:
+			for (int n = 0; n < resolution; ++n)
+			{
+				double t = static_cast<double>(n) / (resolution - 1);
+				curvePoints.push_back(BBForm(t));
 			}
 			break;
 		case METHOD::MIDPOINT:

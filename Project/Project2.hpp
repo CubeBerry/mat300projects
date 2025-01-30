@@ -31,7 +31,7 @@ private:
 
 	std::pair<double, double> DeCasteljau(double t)
 	{
-		std::vector<std::pair<double, double>> temp(controlPoints.begin(), controlPoints.end());
+		std::vector<std::pair<double, double>> temp = controlPoints;
 
 		for (size_t i = 1; i < controlPoints.size(); ++i)
 		{
@@ -43,6 +43,26 @@ private:
 		}
 
 		return temp[0];
+	}
+
+	double shellT{ 0.5 };
+	std::vector<std::vector<std::pair<double, double>>> DeCasteljauShells(double t)
+	{
+		std::vector<std::vector<std::pair<double, double>>> shells;
+		std::vector<std::pair<double, double>> temp = controlPoints;
+
+		for (size_t i = 1; i < controlPoints.size(); ++i)
+		{
+			for (size_t j = 0; j < controlPoints.size() - i; ++j)
+			{
+				temp[j].first = (1.0 - t) * temp[j].first + t * temp[j + 1].first;
+				temp[j].second = (1.0 - t) * temp[j].second + t * temp[j + 1].second;
+			}
+
+			shells.push_back(std::vector<std::pair<double, double>>(temp.begin(), temp.begin() + (controlPoints.size() - i)));
+		}
+
+		return shells;
 	}
 
 	static int BinomialCoefficient(int n, int k)
