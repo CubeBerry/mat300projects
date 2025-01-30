@@ -98,32 +98,31 @@ private:
 	{
 		if (divisionCount <= 1) return controlPoints;
 
-		int N = static_cast<int>(cp.size());
+		int size = static_cast<int>(cp.size());
 		double t = 0.5;
-		std::vector<std::vector<std::pair<double, double>>> shells(N);
+		std::vector<std::vector<std::pair<double, double>>> shells(size);
 		shells[0] = cp;
 
-		for (size_t i = 1; i < N; ++i)
+		for (size_t i = 1; i < size; ++i)
 		{
-			shells[i].resize(N - i);
-			for (size_t j = 0; j < N - i; ++j)
+			shells[i].resize(size - i);
+			for (size_t j = 0; j < size - i; ++j)
 			{
-				double x = t * (shells[i - 1][j].first + shells[i - 1][j + 1].first);
-				double y = t * (shells[i - 1][j].second + shells[i - 1][j + 1].second);
-				shells[i][j] = { x,y };
+				//From (1.0 - t) * temp[j].first + t * temp[j + 1].first; since t == 0.5, (1.0 - t) == t == 0.5
+				shells[i][j] = { t * (shells[i - 1][j].first + shells[i - 1][j + 1].first),t * (shells[i - 1][j].second + shells[i - 1][j + 1].second) };
 			}
 		}
 
 		std::vector<std::pair<double, double>> l;
-		for (int i = 0; i < N; ++ i)
+		for (int i = 0; i < size; ++ i)
 		{
 			l.push_back(shells[i][0]);
 		}
 
 		std::vector<std::pair<double, double>> r;
-		for (int i = 0; i < N; ++i)
+		for (int i = 0; i < size; ++i)
 		{
-			r.push_back(shells[N - 1 - i][i]);
+			r.push_back(shells[size - 1 - i][i]);
 		}
 
 		std::vector<std::pair<double, double>> m(l);
