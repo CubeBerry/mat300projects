@@ -14,7 +14,7 @@ void Project2::Update(float /*dt*/)
 void Project2::ImGuiDraw(float /*dt*/)
 {
 	ImGuiIO& io = ImGui::GetIO();
-	ImGui::SetNextWindowPos(ImVec2(0, 0));
+	ImGui::SetNextWindowPos(ImVec2(0, 20));
 	ImGui::SetNextWindowSize(ImVec2(io.DisplaySize.x, io.DisplaySize.y));
 
 	ImGui::Begin("Graph", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
@@ -36,7 +36,7 @@ void Project2::ImGuiDraw(float /*dt*/)
 	{
 		if (controlPoints.size() < 20)
 		{
-			controlPoints.push_back({ 0.0, 0.0 });
+			controlPoints.push_back({ 0.5, 0.5 });
 		}
 	}
 	ImGui::SameLine();
@@ -51,12 +51,12 @@ void Project2::ImGuiDraw(float /*dt*/)
 	// Draw Graph
 	if (ImPlot::BeginPlot("Project2", ImVec2(-1, -1)))
 	{
-		ImPlot::SetupAxesLimits(-1.0, 1.0, -1.0, 1.0, ImGuiCond_Always);
+		ImPlot::SetupAxesLimits(0.0, 1.0, 0.0, 1.0, ImGuiCond_Always);
 
-		ImPlot::SetupAxisFormat(ImAxis_X1, "%.2f");
-		ImPlot::SetupAxisFormat(ImAxis_Y1, "%.2f");
-		ImPlot::SetupAxisLimitsConstraints(ImAxis_X1, -1.0, 1.0);
-		ImPlot::SetupAxisLimitsConstraints(ImAxis_Y1, -1.0, 1.0);
+		ImPlot::SetupAxisFormat(ImAxis_X1, "%.1f");
+		ImPlot::SetupAxisFormat(ImAxis_Y1, "%.1f");
+		ImPlot::SetupAxisLimitsConstraints(ImAxis_X1, 0.0, 1.0);
+		ImPlot::SetupAxisLimitsConstraints(ImAxis_Y1, 0.0, 1.0);
 
 		// Control Points
 		std::vector<double> xs;
@@ -65,10 +65,10 @@ void Project2::ImGuiDraw(float /*dt*/)
 		{
 			ImPlot::DragPoint(i, &controlPoints[i].first, &controlPoints[i].second, ImVec4(1.f, 1.f, 1.f, 1.f), 10);
 
-			if (controlPoints[i].first <= -1.0) controlPoints[i].first = -1.0;
+			if (controlPoints[i].first <= 0.0) controlPoints[i].first = 0.0;
 			else if (controlPoints[i].first >= 1.0) controlPoints[i].first = 1.0;
 
-			if (controlPoints[i].second <= -1.0) controlPoints[i].second = -1.0;
+			if (controlPoints[i].second <= 0.0) controlPoints[i].second = 0.0;
 			else if (controlPoints[i].second >= 1.0) controlPoints[i].second = 1.0;
 
 			xs.push_back(controlPoints[i].first);

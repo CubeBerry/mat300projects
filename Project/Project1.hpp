@@ -21,6 +21,21 @@ private:
 	std::vector<double> controlPoints{ 1.0, 1.0 };
 	bool isDeCasteljau{ true };
 
+	double DeCasteljau(const std::vector<double>& cp, double t)
+	{
+		std::vector<double> temp(cp.begin(), cp.end());
+
+		for (int i = 1; i <= degree; ++i)
+		{
+			for (int j = 0; j <= degree - i; ++j)
+			{
+				temp[j] = (1.0 - t) * temp[j] + t * temp[j + 1];
+			}
+		}
+
+		return temp[0];
+	}
+
 	static int BinomialCoefficient(int n, int k)
 	{
 		int result{ 1 };
@@ -43,20 +58,5 @@ private:
 		}
 
 		return p;
-	}
-
-	double DeCasteljau(const std::vector<double>& cp, double t)
-	{
-		std::vector<double> temp(cp.begin(), cp.end());
-
-		for (int i = 1; i <= degree; ++i)
-		{
-			for (int j = 0; j <= degree - i; ++j)
-			{
-				temp[j] = (1.0 - t) * temp[j] + t * temp[j + 1];
-			}
-		}
-
-		return temp[0];
 	}
 };

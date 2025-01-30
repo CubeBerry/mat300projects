@@ -26,8 +26,24 @@ private:
 	METHOD method{ METHOD::NLI };
 
 	std::vector<std::pair<double, double>> controlPoints = {
-		{ 0.0, 0.0 }
+		{ 0.5, 0.5 }
 	};
+
+	std::pair<double, double> DeCasteljau(double t)
+	{
+		std::vector<std::pair<double, double>> temp(controlPoints.begin(), controlPoints.end());
+
+		for (size_t i = 1; i < controlPoints.size(); ++i)
+		{
+			for (size_t j = 0; j < controlPoints.size() - i; ++j)
+			{
+				temp[j].first = (1.0 - t) * temp[j].first + t * temp[j + 1].first;
+				temp[j].second = (1.0 - t) * temp[j].second + t * temp[j + 1].second;
+			}
+		}
+
+		return temp[0];
+	}
 
 	static int BinomialCoefficient(int n, int k)
 	{
@@ -53,22 +69,6 @@ private:
 		}
 
 		return p;
-	}
-
-	std::pair<double, double> DeCasteljau(double t)
-	{
-		std::vector<std::pair<double, double>> temp(controlPoints.begin(), controlPoints.end());
-
-		for (size_t i = 1; i < controlPoints.size(); ++i)
-		{
-			for (size_t j = 0; j < controlPoints.size() - i; ++j)
-			{
-				temp[j].first = (1.0 - t) * temp[j].first + t * temp[j + 1].first;
-				temp[j].second = (1.0 - t) * temp[j].second + t * temp[j + 1].second;
-			}
-		}
-
-		return temp[0];
 	}
 
 	std::vector<std::pair<double, double>> MidpointSubdivision()
