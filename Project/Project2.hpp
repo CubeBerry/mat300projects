@@ -29,6 +29,7 @@ private:
 		{ 0.5, 0.5 }
 	};
 
+	//1. NLI
 	std::pair<double, double> DeCasteljau(double t)
 	{
 		std::vector<std::pair<double, double>> temp = controlPoints;
@@ -65,6 +66,7 @@ private:
 		return shells;
 	}
 
+	//2. BB
 	static int BinomialCoefficient(int n, int k)
 	{
 		int result{ 1 };
@@ -91,9 +93,52 @@ private:
 		return p;
 	}
 
-	std::vector<std::pair<double, double>> MidpointSubdivision()
+	//3. Midpoint Subdivision
+	std::vector<std::pair<double, double>> MidpointSubdivision(const std::vector<std::pair<double, double>>& cp, int divisionCount)
 	{
-		std::vector<std::pair<double, double>> temp;
-		return temp;
+		if (divisionCount <= 1) return controlPoints;
+
+		int N = static_cast<int>(cp.size());
+		double t = 0.5;
+		std::vector<std::vector<std::pair<double, double>>> shells(N);
+		shells[0] = cp;
+
+		for (size_t i = 1; i < N; ++i)
+		{
+			shells[i].resize(N - i);
+			for (size_t j = 0; j < N - i; ++j)
+			{
+				double x = t * (shells[i - 1][j].first + shells[i - 1][j + 1].first);
+				double y = t * (shells[i - 1][j].second + shells[i - 1][j + 1].second);
+				shells[i][j] = { x,y };
+			}
+		}
+
+		std::vector<std::pair<double, double>> l;
+		for (int i = 0; i < N; ++ i)
+		{
+			l.push_back(shells[i][0]);
+		}
+
+		std::vector<std::pair<double, double>> r;
+		for (int i = 0; i < N; ++i)
+		{
+			r.push_back(shells[N - 1 - i][i]);
+		}
+
+		std::vector<std::pair<double, double>> m(l);
+		for (int i = 1; i < shells.size(); ++i)
+		{
+			m.push_back(r[i]);
+		}
+
+		if (divisionCount == 2) return m;
+
+		auto left = MidpointSubdivision(l, divisionCount - 1);
+		auto right = MidpointSubdivision(r, divisionCount - 1);
+
+		left.pop_back();
+		left.insert(left.end(), right.begin(), right.end());
+		return left;
 	}
 };
