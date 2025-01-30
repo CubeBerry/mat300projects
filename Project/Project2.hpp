@@ -45,7 +45,7 @@ private:
 		return temp[0];
 	}
 
-	double shellT{ 0.5 };
+	float shellT{ 0.5f };
 	std::vector<std::vector<std::pair<double, double>>> DeCasteljauShells(double t)
 	{
 		std::vector<std::vector<std::pair<double, double>>> shells;

@@ -20,7 +20,7 @@ void Project2::ImGuiDraw(float /*dt*/)
 	ImGui::Begin("Graph", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 
 	// Degree Control
-	ImGui::Text("Control Points: ");
+	ImGui::Text("Control Points:");
 	ImGui::SameLine();
 	ImGui::Text(std::to_string(controlPoints.size()).c_str());
 	ImGui::SameLine();
@@ -40,13 +40,16 @@ void Project2::ImGuiDraw(float /*dt*/)
 		}
 	}
 	ImGui::SameLine();
-	ImGui::Text("Method: ");
+	ImGui::Text("Method:");
 	ImGui::SameLine();
 	if (ImGui::RadioButton("NLI", method == METHOD::NLI)) method = METHOD::NLI;
 	ImGui::SameLine();
 	if (ImGui::RadioButton("BB-Form", method == METHOD::BB)) method = METHOD::BB;
 	ImGui::SameLine();
 	if (ImGui::RadioButton("Midpoint Subdivision", method == METHOD::MIDPOINT)) method = METHOD::MIDPOINT;
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(200.f);
+	ImGui::SliderFloat("t-value", &shellT, 0.f, 1.f, "%.2f");
 
 	// Draw Graph
 	if (ImPlot::BeginPlot("Project2", ImVec2(-1, -1)))
@@ -90,7 +93,7 @@ void Project2::ImGuiDraw(float /*dt*/)
 				curvePoints.push_back(DeCasteljau(t));
 			}
 
-			std::vector<std::vector<std::pair<double, double>>> shells = DeCasteljauShells(shellT);
+			std::vector<std::vector<std::pair<double, double>>> shells = DeCasteljauShells(static_cast<double>(shellT));
 			for (size_t i = 0; i < shells.size(); ++i)
 			{
 				std::vector<double> sx, sy;
@@ -100,9 +103,8 @@ void Project2::ImGuiDraw(float /*dt*/)
 					sy.push_back(s.second);
 				}
 
-				ImPlot::PushStyleVar(ImPlotStyleVar_LineWeight, 2.f);
 				ImPlot::PlotLine("Shell", sx.data(), sy.data(), static_cast<int>(sx.size()));
-				ImPlot::PopStyleVar();
+				ImPlot::PlotScatter("Shell", sx.data(), sy.data(), static_cast<int>(sx.size()));
 			}
 		}
 		break;

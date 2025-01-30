@@ -20,7 +20,7 @@ void Project1::ImGuiDraw(float /*dt*/)
 	ImGui::Begin("Graph", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 
 	// Degree Control
-	ImGui::Text("Degree: ");
+	ImGui::Text("Degree:");
 	ImGui::SameLine();
 	ImGui::Text("%d", degree);
 	ImGui::SameLine();
@@ -42,7 +42,7 @@ void Project1::ImGuiDraw(float /*dt*/)
 		}
 	}
 	ImGui::SameLine();
-	ImGui::Text("Method: ");
+	ImGui::Text("Method:");
 	ImGui::SameLine();
 	if (ImGui::RadioButton("De Casteljau", isDeCasteljau == true)) isDeCasteljau = true;
 	ImGui::SameLine();
