@@ -1,7 +1,4 @@
 #version 460
-#if VULKAN
-#extension GL_EXT_nonuniform_qualifier : enable
-#endif
 
 #define MAX_TEXTURES 32
 #define MAX_LIGHTS 10
@@ -54,58 +51,30 @@ struct fPointLight
     float quadratic;
 };
 
-#if VULKAN
-layout(set = 1, binding = 0) uniform fUniformMatrix
-#else
 layout(std140, binding = 3) uniform fUniformMatrix
-#endif
 {
     fMatrix f_matrix[MAX_TEXTURES];
 };
 
-#if VULKAN
-layout(set = 1, binding = 1) uniform sampler2D tex[MAX_TEXTURES];
-#else
-uniform sampler2D tex[MAX_TEXTURES];
-#endif
+// uniform sampler2D tex[MAX_TEXTURES];
 
-#if VULKAN
-layout(set = 1, binding = 2) uniform fUniformMaterial
-#else
 layout(std140, binding = 4) uniform fUniformMaterial
-#endif
 {
     fMaterial f_material[MAX_TEXTURES];
 };
 
-#if VULKAN
-layout(set = 1, binding = 3) uniform fDirectionalLightList
-#else
 layout(std140, binding = 5) uniform fDirectionalLightList
-#endif
 {
     fDirectionalLight directionalLightList[MAX_LIGHTS];
 };
 
-#if VULKAN
-layout(set = 1, binding = 4) uniform fPointLightList
-#else
 layout(std140, binding = 6) uniform fPointLightList
-#endif
 {
     fPointLight pointLightList[MAX_LIGHTS];
 };
 
-#if VULKAN
-layout(push_constant) uniform ActiveLights
-{
-    int activePointLights;
-    int activeDirectionalLights;
-} activeLights;
-#else
 uniform int activePointLights;
 uniform int activeDirectionalLights;
-#endif
 
 vec3 BlinnPhong(vec3 lightPosition, vec3 lightColor, float ambientStrength, float specularStrength, bool isPointLight, int lightIndex)
 {
@@ -193,8 +162,9 @@ vec3 PBR(vec3 lightPosition, vec3 lightColor, bool isPointLight, int lightIndex)
     fMaterial material = f_material[i_object_index];
 
     vec3 albedo = vec3(0.0);
-    if (f_matrix[i_object_index].isTex) albedo = texture(tex[f_matrix[i_object_index].texIndex], i_uv).rgb;
-    else albedo = i_col.rgb;
+    // if (f_matrix[i_object_index].isTex) albedo = texture(tex[f_matrix[i_object_index].texIndex], i_uv).rgb;
+    // else
+        albedo = i_col.rgb;
 
     float ao = 1.0;
     float distance = isPointLight ? length(lightPosition - i_fragment_position) : 1.0;
