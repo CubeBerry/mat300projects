@@ -3,7 +3,7 @@
 #extension GL_EXT_nonuniform_qualifier : enable
 #endif
 
-#define MAX_TEXTURES 500
+#define MAX_TEXTURES 32
 #define MAX_LIGHTS 10
 const float PI = 3.14159265359;
 
