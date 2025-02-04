@@ -14,3 +14,11 @@
 2. Drag white circle to control points.
 3. Click + / - buttons to add or remove degrees.
 4. Click De Casteljau / BB-Form to change calculation method.
+
+## Project 2
+1. A working executable is MAT300Projects.exe in "Executable" folder.
+2. Drag white circle to control points.
+3. Click + / - buttons to add or remove degrees.
+4. Click NLI / BB-Form / Midpoint Subdivision to change calculation method.
+5. Slide t-value to control t value which shows nested linear pieces when NLI method is enabled.
+6. Click Polyline, Shell, Bezier Curve on the top-left side of the graph window to show / hide each graph.
