@@ -217,9 +217,9 @@ const char* GameStateManager::GameLevelTypeEnumToChar(GameLevel type)
 	case GameLevel::PROJECT2:
 		return "PROJECT2";
 		break;
-	//case GameLevel::PHYSICSDEMO:
-	//	return "PHYSICSDEMO";
-	//	break;
+	case GameLevel::PROJECT3:
+		return "PROJECT3";
+		break;
 	//case GameLevel::POCKETBALL:
 	//	return "POCKETBALL";
 	//	break;

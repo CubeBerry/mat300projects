@@ -1,17 +1,17 @@
-#include "Project2.hpp"
+#include "Project3.hpp"
 #include "Engine.hpp"
 #include "imgui.h"
 #include "implot.h"
 
-void Project2::Init()
+void Project3::Init()
 {
 }
 
-void Project2::Update(float /*dt*/)
+void Project3::Update(float /*dt*/)
 {
 }
 
-void Project2::ImGuiDraw(float /*dt*/)
+void Project3::ImGuiDraw(float /*dt*/)
 {
 	ImGuiIO& io = ImGui::GetIO();
 	ImGui::SetNextWindowPos(ImVec2(0, 20));
@@ -41,18 +41,9 @@ void Project2::ImGuiDraw(float /*dt*/)
 	}
 	ImGui::SameLine();
 	ImGui::Text("Method:");
-	ImGui::SameLine();
-	if (ImGui::RadioButton("NLI", method == METHOD::NLI)) method = METHOD::NLI;
-	ImGui::SameLine();
-	if (ImGui::RadioButton("BB-Form", method == METHOD::BB)) method = METHOD::BB;
-	ImGui::SameLine();
-	if (ImGui::RadioButton("Midpoint Subdivision", method == METHOD::MIDPOINT)) method = METHOD::MIDPOINT;
-	ImGui::SameLine();
-	ImGui::SetNextItemWidth(200.f);
-	ImGui::SliderFloat("t-value", &shellT, 0.f, 1.f, "%.2f");
 
 	// Draw Graph
-	if (ImPlot::BeginPlot("Project2", ImVec2(-1, -1)))
+	if (ImPlot::BeginPlot("Project3", ImVec2(-1, -1)))
 	{
 		ImPlot::SetupAxesLimits(0.0, 1.0, 0.0, 1.0, ImGuiCond_Always);
 
@@ -80,44 +71,13 @@ void Project2::ImGuiDraw(float /*dt*/)
 		// Polyline
 		ImPlot::PlotLine("Polyline", xs.data(), ys.data(), static_cast<int>(xs.size()));
 
-		// Bezier Curve
+		// Newton
 		int resolution{ 200 };
 		std::vector<std::pair<double, double>> curvePoints;
-		switch (method)
+		for (int n = 0; n < resolution; ++n)
 		{
-		case METHOD::NLI:
-		{
-			for (int n = 0; n < resolution; ++n)
-			{
-				double t = static_cast<double>(n) / (resolution - 1);
-				curvePoints.push_back(DeCasteljau(t));
-			}
-
-			std::vector<std::vector<std::pair<double, double>>> shells = DeCasteljauShells(static_cast<double>(shellT));
-			for (size_t i = 0; i < shells.size(); ++i)
-			{
-				std::vector<double> sx, sy;
-				for (auto& s : shells[i])
-				{
-					sx.push_back(s.first);
-					sy.push_back(s.second);
-				}
-
-				ImPlot::PlotLine("Shell", sx.data(), sy.data(), static_cast<int>(sx.size()));
-				ImPlot::PlotScatter("Shell", sx.data(), sy.data(), static_cast<int>(sx.size()));
-			}
-		}
-		break;
-		case METHOD::BB:
-			for (int n = 0; n < resolution; ++n)
-			{
-				double t = static_cast<double>(n) / (resolution - 1);
-				curvePoints.push_back(BBForm(t));
-			}
-			break;
-		case METHOD::MIDPOINT:
-			curvePoints = MidpointSubdivision(controlPoints, 10);
-			break;
+			double t = static_cast<double>(n) / (resolution - 1);
+			curvePoints.push_back(Newton(t));
 		}
 
 		std::vector<double> cx, cy;
@@ -126,7 +86,7 @@ void Project2::ImGuiDraw(float /*dt*/)
 			cx.push_back(p.first);
 			cy.push_back(p.second);
 		}
-		ImPlot::PlotLine("Bezier Curve", cx.data(), cy.data(), static_cast<int>(cx.size()));
+		ImPlot::PlotLine("Newton", cx.data(), cy.data(), static_cast<int>(cx.size()));
 
 		ImPlot::EndPlot();
 	}
@@ -134,12 +94,12 @@ void Project2::ImGuiDraw(float /*dt*/)
 	ImGui::End();
 }
 
-void Project2::Restart()
+void Project3::Restart()
 {
 	End();
 	Init();
 }
 
-void Project2::End()
+void Project3::End()
 {
 }
