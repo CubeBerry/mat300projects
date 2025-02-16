@@ -30,31 +30,31 @@ private:
 			ti[i] = i;
 		}
 
-		std::vector<double> gx(n), gy(n);
+		std::vector<std::vector<double>> gx(n, std::vector<double>(n)), gy(n, std::vector<double>(n));
 		for (int i = 0; i < n; ++i)
 		{
-			gx[i] = controlPoints[i].first;
-			gy[i] = controlPoints[i].second;
+			gx[i][0] = controlPoints[i].first;
+			gy[i][0] = controlPoints[i].second;
 		}
 
-		for (int k = 1; k < n; ++k)
+		for (int i = 1; i < n; ++i)
 		{
-			for (int i = 0; i < n - k; ++i)
+			for (int j = 0; j < n - i; ++j)
 			{
-				gx[i] = (gx[i + 1] - gx[i]) / (ti[i + k] - ti[i]);
-				gy[i] = (gy[i + 1] - gy[i]) / (ti[i + k] - ti[i]);
+				gx[j][i] = (gx[j][i - 1] - gx[j + 1][i - 1]) / (ti[j] - ti[i + j]);
+				gy[j][i] = (gy[j][i - 1] - gy[j + 1][i - 1]) / (ti[j] - ti[i + j]);
 			}
 		}
 
 		std::pair<double, double> result;
-		result.first = gx[0];
-		result.second = gy[0];
+		result.first = gx[0][0];
+		result.second = gy[0][0];
 		double product = 1.0;
 		for (int i = 1; i < n; ++i)
 		{
 			product *= t - ti[i - 1];
-			result.first += gx[i] * product;
-			result.second += gy[i] * product;
+			result.first += gx[0][i] * product;
+			result.second += gy[0][i] * product;
 		}
 		return result;
 	}

@@ -76,7 +76,7 @@ void Project3::ImGuiDraw(float /*dt*/)
 		std::vector<std::pair<double, double>> curvePoints;
 		for (int n = 0; n < resolution; ++n)
 		{
-			double t = static_cast<double>(n) / (resolution - 1);
+			double t = (static_cast<double>(controlPoints.size()) - 1.0) * static_cast<double>(n) / (resolution - 1);
 			curvePoints.push_back(Newton(t));
 		}
 
