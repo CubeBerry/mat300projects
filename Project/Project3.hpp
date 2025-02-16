@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <cmath>
 
 #include "GameState.hpp"
 
@@ -53,7 +52,7 @@ private:
 		double product = 1.0;
 		for (int i = 1; i < n; ++i)
 		{
-			product *= t - (i - 1);
+			product *= t - ti[i - 1];
 			result.first += gx[i] * product;
 			result.second += gy[i] * product;
 		}
