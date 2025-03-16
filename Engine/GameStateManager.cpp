@@ -220,15 +220,9 @@ const char* GameStateManager::GameLevelTypeEnumToChar(GameLevel type)
 	case GameLevel::PROJECT3:
 		return "PROJECT3";
 		break;
-	//case GameLevel::POCKETBALL:
-	//	return "POCKETBALL";
-	//	break;
-	//case GameLevel::PLATFORMDEMO:
-	//	return "PLATFORMDEMO";
-	//	break;
-	//case GameLevel::BEATEMUPDEMO:
-	//	return "BEATEMUPDEMO";
-	//	break;
+	case GameLevel::PROJECT4:
+		return "PROJECT4";
+		break;
 	}
 	return "NONE";
 }

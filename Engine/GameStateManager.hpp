@@ -7,6 +7,7 @@ enum class GameLevel
 	PROJECT1,
 	PROJECT2,
 	PROJECT3,
+	PROJECT4,
 	NONE
 };
 
