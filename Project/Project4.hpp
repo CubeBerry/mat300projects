@@ -65,5 +65,54 @@ private:
 		for (int j = 1; j <= N - 2; ++j) A[N][j + 2] = N - 1 - j;
 		rhsX[N] = 0.0;
 		rhsY[N] = 0.0;
+
+		std::vector<double> solutionX = GaussianElimination(A, rhsX);
+		std::vector<double> solutionY = GaussianElimination(A, rhsY);
+
+		// f(t) = a0 + a1*t + a3*t^3 + b1*(t - 1)^3 + b2*(t - 2)^3 + ... + bN-2*(t - N + 2)^3
+		double fX = solutionX[0] + solutionX[1] * t + solutionX[2] * t * t * t;
+		double fY = solutionY[0] + solutionY[1] * t + solutionY[2] * t * t * t;
+		for (int i = 1; i <= N - 2; ++i)
+		{
+			// t >= i -> (t - i)^3, t < i -> 0
+			if (t >= i)
+			{
+				// solution[i + 2] == b1, b2, ..., bN-2, std::pow(t - i, 3) == (t - i)^3
+				fX += solutionX[i + 2] * std::pow(t - i, 3);
+				fY += solutionY[i + 2] * std::pow(t - i, 3);
+			}
+		}
+
+		return { fX, fY };
+	}
+
+	std::vector<double> GaussianElimination(const std::vector<std::vector<double>>& A, const std::vector<double>& rhs) const
+	{
+		int N = static_cast<int>(rhs.size());
+		std::vector<std::vector<double>> B(A);
+		std::vector<double> x(rhs);
+		// Forward Elimination
+		for (int i = 0; i < N - 1; ++i)
+		{
+			for (int j = i + 1; j < N; ++j)
+			{
+				double ratio = B[j][i] / B[i][i];
+				for (int k = i; k < N; ++k)
+				{
+					B[j][k] -= ratio * B[i][k];
+				}
+				x[j] -= ratio * x[i];
+			}
+		}
+		// Backward Substitution
+		for (int i = N - 1; i >= 0; --i)
+		{
+			for (int j = i + 1; j < N; ++j)
+			{
+				x[i] -= B[i][j] * x[j];
+			}
+			x[i] /= B[i][i];
+		}
+		return x;
 	}
 };
