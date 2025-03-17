@@ -71,13 +71,13 @@ void Project4::ImGuiDraw(float /*dt*/)
 		// Polyline
 		ImPlot::PlotLine("Polyline", xs.data(), ys.data(), static_cast<int>(xs.size()));
 
-		// Newton
+		// Cubic Spline
 		int resolution{ 200 };
 		std::vector<std::pair<double, double>> curvePoints;
-		for (int n = 0; n < resolution; ++n)
+		for (int r = 0; r < resolution; ++r)
 		{
-			double t = (static_cast<double>(controlPoints.size()) - 1.0) * static_cast<double>(n) / (resolution - 1);
-			curvePoints.push_back(Newton(t));
+			double t = (static_cast<double>(controlPoints.size()) - 1.0) * static_cast<double>(r) / (resolution - 1);
+			curvePoints.push_back(CubicSpline(t));
 		}
 
 		std::vector<double> cx, cy;
@@ -86,7 +86,7 @@ void Project4::ImGuiDraw(float /*dt*/)
 			cx.push_back(p.first);
 			cy.push_back(p.second);
 		}
-		ImPlot::PlotLine("Newton", cx.data(), cy.data(), static_cast<int>(cx.size()));
+		ImPlot::PlotLine("Cubic Spline", cx.data(), cy.data(), static_cast<int>(cx.size()));
 
 		ImPlot::EndPlot();
 	}
