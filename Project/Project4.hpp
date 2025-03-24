@@ -89,19 +89,19 @@ private:
 	std::vector<double> GaussianElimination(const std::vector<std::vector<double>>& A, const std::vector<double>& rhs) const
 	{
 		int N = static_cast<int>(rhs.size());
-		std::vector<std::vector<double>> B(A);
-		std::vector<double> x(rhs);
+		std::vector<std::vector<double>> matrix(A);
+		std::vector<double> result(rhs);
 		// Forward Elimination
 		for (int i = 0; i < N - 1; ++i)
 		{
 			for (int j = i + 1; j < N; ++j)
 			{
-				double ratio = B[j][i] / B[i][i];
+				double ratio = matrix[j][i] / matrix[i][i];
 				for (int k = i; k < N; ++k)
 				{
-					B[j][k] -= ratio * B[i][k];
+					matrix[j][k] -= ratio * matrix[i][k];
 				}
-				x[j] -= ratio * x[i];
+				result[j] -= ratio * result[i];
 			}
 		}
 		// Backward Substitution
@@ -109,10 +109,10 @@ private:
 		{
 			for (int j = i + 1; j < N; ++j)
 			{
-				x[i] -= B[i][j] * x[j];
+				result[i] -= matrix[i][j] * result[j];
 			}
-			x[i] /= B[i][i];
+			result[i] /= matrix[i][i];
 		}
-		return x;
+		return result;
 	}
 };
