@@ -28,3 +28,9 @@
 2. Drag white circle to control points.
 3. Click + / - buttons to add or remove degrees.
 4. Click Polyline, Newton on the top-left side of the graph window to show / hide each graph.
+
+## Project 4
+1. A working executable is MAT300Projects.exe in "Executable" folder.
+2. Drag white circle to control points.
+3. Click + / - buttons to add or remove degrees.
+4. Click Polyline, Cubic Spline on the top-left side of the graph window to show / hide each graph.
