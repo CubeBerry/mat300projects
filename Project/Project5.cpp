@@ -33,14 +33,14 @@ void Project5::ImGuiDraw(float /*dt*/)
 		if (degree > 1)
 		{
 			degree--;
-			N = degree + 10;
+			N = std::max(degree + 10, 2 * degree);
 			controlPoints.resize(N - degree, 1.0);
 		}
 	}
 	ImGui::SameLine();
 	if (ImGui::SmallButton("+D"))
 	{
-		if (degree < 20)
+		if (degree < 9)
 		{
 			degree++;
 			N = degree + 10;
@@ -55,7 +55,8 @@ void Project5::ImGuiDraw(float /*dt*/)
 	ImGui::SameLine();
 	if (ImGui::SmallButton("-N"))
 	{
-		if (N > degree + 2) N--;
+		if (N > degree + 10) N--;
+		if (N < 2 * degree) N = 2 * degree;
 		controlPoints.resize(N - degree, 1.0);
 	}
 	ImGui::SameLine();
@@ -95,40 +96,43 @@ void Project5::ImGuiDraw(float /*dt*/)
 			double temp = cpX;
 			ImPlot::DragPoint(i, &cpX, &cpY, ImVec4(1.f, 1.f, 1.f, 1.f), 10);
 			cpX = temp;
+			controlPoints[i] = cpY;
 
 			ImDrawList* drawList = ImGui::GetForegroundDrawList();
 			ImVec2 cpPosition = ImPlot::PlotToPixels(ImPlotPoint(cpX, cpY));
 			std::string t = std::format("{:.2f}", cpY);
 			drawList->AddText(ImVec2(cpPosition.x + 18.f, cpPosition.y - 18.f), IM_COL32(255, 255, 255, 255), t.c_str());
 
-			//double tPosition = i / static_cast<double>(N - degree);
-			//double temp = tPosition;
-			//ImPlot::DragPoint(i, &tPosition, &controlPoints[i], ImVec4(1.f, 1.f, 1.f, 1.f), 10);
-			//tPosition = temp;
-
-			//ImDrawList* drawList = ImGui::GetForegroundDrawList();
-			//ImVec2 cpPosition = ImPlot::PlotToPixels(ImPlotPoint(tPosition, controlPoints[i]));
-			//std::string t = std::format("{:.2f}", controlPoints[i]);
-			//drawList->AddText(ImVec2(cpPosition.x + 18.f, cpPosition.y - 18.f), IM_COL32(255, 255, 255, 255), t.c_str());
-
-			//if (controlPoints[i] <= -3.0) controlPoints[i] = -3.0;
-			//else if (controlPoints[i] >= 3.0) controlPoints[i] = 3.0;
+			if (controlPoints[i] <= -3.0) controlPoints[i] = -3.0;
+			else if (controlPoints[i] >= 3.0) controlPoints[i] = 3.0;
 		}
 
-		std::vector<double> tValues, pValues;
-		int resolution{ 200 };
-		tValues.reserve(resolution);
-		pValues.reserve(resolution);
-		for (int n = 0; n < resolution; ++n)
+		switch (method)
 		{
-			double t = static_cast<double>(n) / (resolution - 1);
-			double val = DeBoor(t);
-
-			tValues.push_back(t);
-			pValues.push_back(val);
+		case Method::DB:
+		{
+			double t_min = degree;
+			double t_max = N - degree;
+			int resolution = 200;
+			std::vector<double> tValues, splineValues;
+			tValues.reserve(resolution);
+			splineValues.reserve(resolution);
+			for (int n = 0; n < resolution; ++n)
+			{
+				double u = static_cast<double>(n) / (resolution - 1);
+				double t = t_min + u * (t_max - t_min);
+				double val = DeBoor(t);
+				tValues.push_back(t);
+				splineValues.push_back(val);
+			}
+			ImPlot::PlotLine("f(t)", tValues.data(), splineValues.data(), resolution);
 		}
-
-		ImPlot::PlotLine("f(t)", tValues.data(), pValues.data(), resolution);
+		break;
+		case Method::DD:
+			break;
+		case Method::SSPF:
+			break;
+		}
 
 		ImPlot::EndPlot();
 	}

@@ -31,7 +31,24 @@ private:
 
 	double DeBoor(double t)
 	{
-		t;
-		return 0.0;
+        int d = degree;
+
+        if (t < d) t = d;
+        if (t >= N - d) t = N - d - 1e-6;
+
+        int J = static_cast<int>(std::floor(t));
+
+        std::vector<double> c = controlPoints;
+        for (int k = 1; k <= d; ++k)
+        {
+            for (int i = J; i >= J - d + k; --i)
+            {
+                // i + d - k + 1 - i == d - k + 1
+                double alpha = ((i + d - k + 1) - t) / (d - k + 1);
+                double beta = (t - i) / (d - k + 1);
+                c[i] = alpha * c[i - 1] + beta * c[i];
+            }
+        }
+        return c[J];
 	}
 };
