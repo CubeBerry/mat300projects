@@ -107,30 +107,31 @@ void Project5::ImGuiDraw(float /*dt*/)
 			else if (controlPoints[i] >= 3.0) controlPoints[i] = 3.0;
 		}
 
-		switch (method)
+		double t_min = degree;
+		double t_max = N - degree;
+		int resolution = 200;
+		std::vector<double> tValues, splineValues;
+		tValues.reserve(resolution);
+		splineValues.reserve(resolution);
+		for (int n = 0; n < resolution; ++n)
 		{
-		case Method::DB:
-		{
-			double t_min = degree;
-			double t_max = N - degree;
-			int resolution = 200;
-			std::vector<double> tValues, splineValues;
-			tValues.reserve(resolution);
-			splineValues.reserve(resolution);
-			for (int n = 0; n < resolution; ++n)
+			double t = t_min + static_cast<double>(n) / (resolution - 1) * (t_max - t_min);
+			tValues.push_back(t);
+			switch (method)
 			{
-				double t = t_min + static_cast<double>(n) / (resolution - 1) * (t_max - t_min);
-				tValues.push_back(t);
+			case Method::DB:
+			{
 				splineValues.emplace_back(DeBoor(t));
 			}
-			ImPlot::PlotLine("f(t)", tValues.data(), splineValues.data(), resolution);
-		}
-		break;
-		case Method::DD:
 			break;
-		case Method::SSPF:
-			break;
+			case Method::DD:
+				splineValues.emplace_back(DividedDifferences(t));
+				break;
+			case Method::SSPF:
+				break;
+			}
 		}
+		ImPlot::PlotLine("f(t)", tValues.data(), splineValues.data(), resolution);
 
 		ImPlot::EndPlot();
 	}

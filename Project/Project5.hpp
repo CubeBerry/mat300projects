@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cmath>
+#include <exponential.hpp>
 
 #include "GameState.hpp"
 
@@ -50,5 +51,41 @@ private:
             }
         }
         return c[J];
+	}
+
+    double DividedDifferences(double t)
+	{
+        int d = degree;
+        double result{ 0.0 };
+
+        for (int i = 0; i < static_cast<int>(controlPoints.size()); ++i)
+        {
+            // i + d + 1 - i == d + 1
+            int n = d + 2;
+            std::vector<double> f(n);
+
+			for (int j = 0; j < n; ++j)
+			{
+				double x = i + j;
+				if (t >= x) f[j] = glm::pow(t - x, d);
+				else f[j] = 0.0;
+			}
+
+			// Compute divided differences
+			// final result is f[0]
+            for (int j = 1; j < n; ++j)
+            {
+				for (int k = 0; k < n - j; ++k)
+				{
+					f[k] = (f[k + 1] - f[k]) / j;
+				}
+            }
+
+            // (-1)^(d + 1) * (i + d + 1 - i) * [i, ..., i + d + 1](t-x)^d+
+            double B = glm::pow(-1.0, d + 1) * (d + 1) * f[0];
+			result += B * controlPoints[i];
+        }
+
+        return result;
 	}
 };
