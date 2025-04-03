@@ -86,6 +86,7 @@ void Project5::ImGuiDraw(float /*dt*/)
 		ImPlot::SetupAxisLimitsConstraints(ImAxis_Y1, -3.0, 3.0);
 
 		// Control Points
+		// i < controlPoints.size() == N - degree - 1
 		for (int i = 0; i < static_cast<int>(controlPoints.size()); ++i)
 		{
 			double cpX = (degree + 1) / 2.0 + i;
