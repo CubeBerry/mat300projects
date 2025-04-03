@@ -119,11 +119,9 @@ void Project5::ImGuiDraw(float /*dt*/)
 			splineValues.reserve(resolution);
 			for (int n = 0; n < resolution; ++n)
 			{
-				double u = static_cast<double>(n) / (resolution - 1);
-				double t = t_min + u * (t_max - t_min);
-				double val = DeBoor(t);
+				double t = t_min + static_cast<double>(n) / (resolution - 1) * (t_max - t_min);
 				tValues.push_back(t);
-				splineValues.push_back(val);
+				splineValues.emplace_back(DeBoor(t));
 			}
 			ImPlot::PlotLine("f(t)", tValues.data(), splineValues.data(), resolution);
 		}
