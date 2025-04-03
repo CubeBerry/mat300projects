@@ -3,6 +3,7 @@
 #include "Project2.hpp"
 #include "Project3.hpp"
 #include "Project4.hpp"
+#include "Project5.hpp"
 
 #undef main
 
@@ -15,7 +16,8 @@ int main(void)
     engine.GetGameStateManager().AddLevel(new Project2);
     engine.GetGameStateManager().AddLevel(new Project3);
 	engine.GetGameStateManager().AddLevel(new Project4);
-    engine.GetGameStateManager().LevelInit(GameLevel::PROJECT4);
+	engine.GetGameStateManager().AddLevel(new Project5);
+    engine.GetGameStateManager().LevelInit(GameLevel::PROJECT5);
 
     engine.Update();
     engine.End();
