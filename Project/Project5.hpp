@@ -88,4 +88,39 @@ private:
 
         return result;
 	}
+
+    int Factorial(int n)
+	{
+		return (n == 0 || n == 1) ? 1 : Factorial(n - 1) * n;
+    }
+
+    int BinomialCoefficient(int n, int k)
+	{
+        if (k > n) return 0;
+        if (k == 0 || k == n) return 1;
+        return BinomialCoefficient(n - 1, k - 1) + BinomialCoefficient(n - 1, k);
+    }
+
+    double SumOfShiftedPowerFunctions(double t)
+    {
+		double f{ 0.0 };
+        int d = degree;
+        int n = d + 2;
+
+		for (int i = 0; i < static_cast<int>(controlPoints.size()); ++i)
+		{
+            double B{ 0.0 };
+			// j == [0, d + 1]
+			for (int j = 0; j < n; ++j)
+			{
+                double x = i + j;
+                double term = t >= x ? glm::pow(t - x, d) : 0.0;
+                double coefficient = glm::pow(-1.0, j) * static_cast<double>(BinomialCoefficient(d + 1, j));
+				B += coefficient * term;
+			}
+			B /= static_cast<double>(Factorial(d));
+			f += B * controlPoints[i];
+		}
+        return f;
+    }
 };

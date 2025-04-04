@@ -128,6 +128,7 @@ void Project5::ImGuiDraw(float /*dt*/)
 				splineValues.emplace_back(DividedDifferences(t));
 				break;
 			case Method::SSPF:
+				splineValues.emplace_back(SumOfShiftedPowerFunctions(t));
 				break;
 			}
 		}
