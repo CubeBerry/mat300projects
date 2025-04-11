@@ -165,6 +165,7 @@
     <ClCompile Include="Project\Project3.cpp" />
     <ClCompile Include="Project\Project4.cpp" />
     <ClCompile Include="Project\Project5.cpp" />
+    <ClCompile Include="Project\Project6.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common_gl\glCheck.hpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Project\Project3.hpp" />
     <ClInclude Include="Project\Project4.hpp" />
     <ClInclude Include="Project\Project5.hpp" />
+    <ClInclude Include="Project\Project6.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
