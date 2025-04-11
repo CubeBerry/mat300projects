@@ -15,7 +15,6 @@ public:
 	void ImGuiDraw(float dt) override;
 	void Restart() override;
 	void End() override;
-
 private:
 	int degree{ 1 };
 	std::vector<double> controlPoints{ 1.0, 1.0 };

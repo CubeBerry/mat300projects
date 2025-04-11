@@ -15,7 +15,6 @@ public:
 	void ImGuiDraw(float dt) override;
 	void Restart() override;
 	void End() override;
-
 private:
 	enum class METHOD
 	{

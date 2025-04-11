@@ -5,10 +5,14 @@
 
 void Project6::Init()
 {
+	UpdateKnowSequence();
+	UpdateDeBoorControlPoints();
 }
 
 void Project6::Update(float /*dt*/)
 {
+	UpdateKnowSequence();
+	UpdateDeBoorControlPoints();
 }
 
 void Project6::ImGuiDraw(float /*dt*/)
@@ -40,6 +44,22 @@ void Project6::ImGuiDraw(float /*dt*/)
 		}
 	}
 
+	// Knot Sequence
+	if (ImGui::Button("Change Knot Sequence"))
+	{
+		isNewDefaultKnotSequence = !isNewDefaultKnotSequence;
+		UpdateKnowSequence();
+		UpdateDeBoorControlPoints();
+	}
+
+	std::ostringstream oss;
+	for (size_t i = 0; i < knotSequence.size(); ++i)
+	{
+		oss << knotSequence[i];
+		if (i != knotSequence.size() - 1) oss << ", ";
+	}
+	ImGui::TextWrapped("Knot Sequence: %s", oss.str().c_str());
+
 	// Draw Graph
 	if (ImPlot::BeginPlot("Project6", ImVec2(-1, -1)))
 	{
@@ -50,10 +70,10 @@ void Project6::ImGuiDraw(float /*dt*/)
 		ImPlot::SetupAxisLimitsConstraints(ImAxis_X1, 0.0, 1.0);
 		ImPlot::SetupAxisLimitsConstraints(ImAxis_Y1, 0.0, 1.0);
 
-		// Control Points
-		std::vector<double> xs;
-		std::vector<double> ys;
-		for (int i = 0; i < controlPoints.size(); ++i)
+		// Bezier Control Points
+		std::vector<double> bcxs;
+		std::vector<double> bcys;
+		for (int i = 0; i < static_cast<int>(controlPoints.size()); ++i)
 		{
 			ImPlot::DragPoint(i, &controlPoints[i].first, &controlPoints[i].second, ImVec4(1.f, 1.f, 1.f, 1.f), 10);
 
@@ -63,28 +83,51 @@ void Project6::ImGuiDraw(float /*dt*/)
 			if (controlPoints[i].second <= 0.0) controlPoints[i].second = 0.0;
 			else if (controlPoints[i].second >= 1.0) controlPoints[i].second = 1.0;
 
-			xs.push_back(controlPoints[i].first);
-			ys.push_back(controlPoints[i].second);
+			bcxs.push_back(controlPoints[i].first);
+			bcys.push_back(controlPoints[i].second);
 		}
-		// Polyline
-		ImPlot::PlotLine("Polyline", xs.data(), ys.data(), static_cast<int>(xs.size()));
+		// Bezier Polyline
+		ImPlot::PlotLine("Bezier Polyline", bcxs.data(), bcys.data(), static_cast<int>(bcxs.size()));
 
 		// Bezier Curve
 		int resolution{ 200 };
 		std::vector<std::pair<double, double>> curvePoints;
+		std::vector<double> bx, by;
 		for (int n = 0; n < resolution; ++n)
 		{
 			double t = static_cast<double>(n) / (resolution - 1);
-			curvePoints.push_back(BBForm(t));
+			bx.push_back(BBForm(t).first);
+			by.push_back(BBForm(t).second);
 		}
+		ImPlot::PlotLine("Bezier Curve", bx.data(), by.data(), static_cast<int>(bx.size()));
 
-		std::vector<double> cx, cy;
-		for (const auto& p : curvePoints)
+		// De Boor Control Points
+		std::vector<double> dcxs, dcys;
+		for (int i = 0; i < static_cast<int>(deBoorControlPoints.size()); ++i)
 		{
-			cx.push_back(p.first);
-			cy.push_back(p.second);
+			ImPlot::DragPoint(i, &deBoorControlPoints[i].first, &deBoorControlPoints[i].second, ImVec4(0.f, 0.f, 1.f, 1.f), 10);
+
+			if (deBoorControlPoints[i].first <= 0.0) deBoorControlPoints[i].first = 0.0;
+			else if (deBoorControlPoints[i].first >= 1.0) deBoorControlPoints[i].first = 1.0;
+
+			if (deBoorControlPoints[i].second <= 0.0) deBoorControlPoints[i].second = 0.0;
+			else if (deBoorControlPoints[i].second >= 1.0) deBoorControlPoints[i].second = 1.0;
+
+			dcxs.push_back(deBoorControlPoints[i].first);
+			dcys.push_back(deBoorControlPoints[i].second);
 		}
-		ImPlot::PlotLine("Bezier Curve", cx.data(), cy.data(), static_cast<int>(cx.size()));
+		// De Boor Polyline
+		ImPlot::PlotLine("De Boor Polyline", dcxs.data(), dcys.data(), static_cast<int>(dcxs.size()));
+
+		// De Boor Curve
+		std::vector<double> dx, dy;
+		for (int n = 0; n < resolution; ++n)
+		{
+			double t = static_cast<double>(n) / (resolution - 1);
+			dx.push_back(DeBoor(t).first);
+			dy.push_back(DeBoor(t).second);
+		}
+		ImPlot::PlotLine("De Boor Curve", dx.data(), dy.data(), static_cast<int>(dx.size()));
 
 		ImPlot::EndPlot();
 	}

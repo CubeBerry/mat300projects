@@ -16,7 +16,6 @@ public:
 	void ImGuiDraw(float dt) override;
 	void Restart() override;
 	void End() override;
-
 private:
 	int degree{ 0 };
 	int N{ 0 };
@@ -45,9 +44,9 @@ private:
             for (int i = J; i >= J - d + p; --i)
             {
                 // i + d - p + 1 - i == d - p + 1
-                double alpha = ((i + d - p + 1) - t) / (d - p + 1);
-                double beta = (t - i) / (d - p + 1);
-                c[i] = alpha * c[i - 1] + beta * c[i];
+                double alpha = (t - i) / (d - p + 1);
+                double beta = ((i + d - p + 1) - t) / (d - p + 1);
+                c[i] = alpha * c[i] + beta * c[i - 1];
             }
         }
         return c[J];

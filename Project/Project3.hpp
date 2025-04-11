@@ -14,7 +14,6 @@ public:
 	void ImGuiDraw(float dt) override;
 	void Restart() override;
 	void End() override;
-
 private:
 	std::vector<std::pair<double, double>> controlPoints = {
 		{ 0.5, 0.5 }
