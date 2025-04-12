@@ -42,3 +42,10 @@
 4. Click +N / -N buttons to add or remove N.
 5. Click De Boor / Divided Differences / Sum of Shifted Power Functions to change calculation method.
 6. Click f(t) on the top-left side of the graph window to show / hide each graph.
+
+## Project 6
+1. A working executable is MAT300Projects.exe in "Executable" folder.
+2. Drag white (or blue if circles are overlapped) circle to control points.
+3. Click + / - buttons to add or remove degrees.
+4. Click Change Knot Sequence button to change Knot Sequence.
+5. Click Bezier Polyline, Bezier Curve, De Boor Polyline, De Boor Curve on the top-left side of the graph window to show / hide each graph.

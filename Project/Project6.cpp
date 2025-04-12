@@ -105,17 +105,21 @@ void Project6::ImGuiDraw(float /*dt*/)
 		std::vector<double> dcxs, dcys;
 		for (int i = 0; i < static_cast<int>(deBoorControlPoints.size()); ++i)
 		{
-			ImPlot::DragPoint(i, &deBoorControlPoints[i].first, &deBoorControlPoints[i].second, ImVec4(0.f, 0.f, 1.f, 1.f), 10);
+			//ImPlot::DragPoint(i, &deBoorControlPoints[i].first, &deBoorControlPoints[i].second, ImVec4(0.f, 0.f, 1.f, 1.f), 10);
 
-			if (deBoorControlPoints[i].first <= 0.0) deBoorControlPoints[i].first = 0.0;
-			else if (deBoorControlPoints[i].first >= 1.0) deBoorControlPoints[i].first = 1.0;
+			//if (deBoorControlPoints[i].first <= 0.0) deBoorControlPoints[i].first = 0.0;
+			//else if (deBoorControlPoints[i].first >= 1.0) deBoorControlPoints[i].first = 1.0;
 
-			if (deBoorControlPoints[i].second <= 0.0) deBoorControlPoints[i].second = 0.0;
-			else if (deBoorControlPoints[i].second >= 1.0) deBoorControlPoints[i].second = 1.0;
+			//if (deBoorControlPoints[i].second <= 0.0) deBoorControlPoints[i].second = 0.0;
+			//else if (deBoorControlPoints[i].second >= 1.0) deBoorControlPoints[i].second = 1.0;
 
 			dcxs.push_back(deBoorControlPoints[i].first);
 			dcys.push_back(deBoorControlPoints[i].second);
 		}
+		// De Boor Control Points
+		ImPlot::PushStyleVar(ImPlotStyleVar_MarkerSize, 10.0f);
+		ImPlot::PlotScatter("De Boor Control Points", dcxs.data(), dcys.data(), static_cast<int>(dcxs.size()));
+		ImPlot::PopStyleVar();
 		// De Boor Polyline
 		ImPlot::PlotLine("De Boor Polyline", dcxs.data(), dcys.data(), static_cast<int>(dcxs.size()));
 
