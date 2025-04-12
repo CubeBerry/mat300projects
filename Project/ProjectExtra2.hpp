@@ -12,11 +12,11 @@ struct HermitePoint
     bool isShowTangent;
 };
 
-class ProjectExtra1 : public GameState
+class ProjectExtra2 : public GameState
 {
 public:
-	ProjectExtra1() = default;
-	~ProjectExtra1() override {}
+	ProjectExtra2() = default;
+	~ProjectExtra2() override {}
 
 	void Init() override;
 	void Update(float dt) override;

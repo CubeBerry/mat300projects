@@ -11,6 +11,7 @@ enum class GameLevel
 	PROJECT5,
 	PROJECT6,
 	EXTRA1,
+	EXTRA2,
 	NONE
 };
 
