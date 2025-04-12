@@ -38,7 +38,7 @@ void ProjectExtra1::ImGuiDraw(float /*dt*/)
 	{
 		if (controlPoints.size() < 20)
 		{
-			controlPoints.emplace_back(HermitePoint{ {0.5, 0.5},  {0.5, 0.5}, false });
+			controlPoints.emplace_back(HermitePoint{ {0.5, 0.5},  {1.0, 0.5}, false });
 		}
 	}
 
