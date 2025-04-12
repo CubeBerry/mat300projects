@@ -49,3 +49,12 @@
 3. Click + / - buttons to add or remove degrees.
 4. Click Change Knot Sequence button to change Knot Sequence.
 5. Click Bezier Polyline, Bezier Curve, De Boor Control Points, De Boor Polyline, De Boor Curve on the top-left side of the graph window to show / hide each graph.
+
+## Extra Credit I
+1. A working executable is MAT300Projects.exe in "Executable" folder.
+2. Drag white circle to control points.
+3. Click + / - buttons to add or remove control points.
+4. Click Hermite Curve on the top-left side of the graph window to show / hide each graph.
+5. Click one of control points on the menu right next to the graph to open menu.
+6. Click Toggle ShowTangent to show / off tangent point (green circle).
+7. Adjust x and y position of tangent by dragging scalar or green circle.
