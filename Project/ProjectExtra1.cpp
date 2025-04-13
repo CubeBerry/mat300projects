@@ -82,7 +82,7 @@ void ProjectExtra1::ImGuiDraw(float /*dt*/)
 
 		// Hermite Curve
 		int resolution{ 200 };
-		std::vector<std::pair<double, double>> curvePoints;
+		std::vector<Point> curvePoints;
 		std::vector<double> hx, hy;
 		for (int n = 0; n < resolution; ++n)
 		{

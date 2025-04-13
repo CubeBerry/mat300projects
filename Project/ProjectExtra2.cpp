@@ -14,6 +14,7 @@ void ProjectExtra2::Init()
 void ProjectExtra2::Update(float /*dt*/)
 {
 	BestFitLine();
+	if (isParabola) BestFitParabola();
 }
 
 void ProjectExtra2::ImGuiDraw(float /*dt*/)
@@ -41,6 +42,16 @@ void ProjectExtra2::ImGuiDraw(float /*dt*/)
 	{
 		controlPoints.push_back({ 0.5, 0.5 });
 	}
+	ImGui::SameLine();
+	// Toggle Parabola
+	if (ImGui::Checkbox("Show Parabola", &isParabola))
+	{
+		if (isParabola)
+		{
+			BestFitLine();
+			BestFitParabola();
+		}
+	}
 
 	// Draw Graph
 	if (ImPlot::BeginPlot("ProjectExtra2", ImVec2(-1, -1)))
@@ -65,24 +76,31 @@ void ProjectExtra2::ImGuiDraw(float /*dt*/)
 		}
 
 		// Best Fit Line
-		double length = 1.0;
-		std::pair<double, double> p0 = { M.first - length * glm::cos(bestTheta), M.second - length * glm::sin(bestTheta) };
-		std::pair<double, double> p1 = { M.first + length * glm::cos(bestTheta), M.second + length * glm::sin(bestTheta) };
-		double lx[2] = { p0.first, p1.first };
-		double ly[2] = { p0.second, p1.second };
-		ImPlot::PlotLine("Best Fit Line", lx, ly, 2);
-
+		if (!isParabola)
+		{
+			double length = 1.0;
+			Point p0 = { M.first - length * glm::cos(bestTheta), M.second - length * glm::sin(bestTheta) };
+			Point p1 = { M.first + length * glm::cos(bestTheta), M.second + length * glm::sin(bestTheta) };
+			double lx[2] = { p0.first, p1.first };
+			double ly[2] = { p0.second, p1.second };
+			ImPlot::PlotLine("Best Fit Line", lx, ly, 2);
+		}
 		// Best Fit Parabola
-		//int resolution{ 200 };
-		//std::vector<std::pair<double, double>> curvePoints;
-		//std::vector<double> hx, hy;
-		//for (int n = 0; n < resolution; ++n)
-		//{
-		//	double t = static_cast<double>(n) / (resolution - 1);
-		//	hx.push_back(HermiteInterpolation(t).first);
-		//	hy.push_back(HermiteInterpolation(t).second);
-		//}
-		//ImPlot::PlotLine("Hermite Curve", hx.data(), hy.data(), static_cast<int>(hx.size()));
+		else
+		{
+			int resolution{ 200 };
+			std::vector<double> px, py;
+			for (int n = 0; n < resolution; ++n)
+			{
+				double t = static_cast<double>(n) / (resolution - 1);
+				double u = 1 - t;
+				Point pt = { u * u * Q0.first + 2 * u * t * Q1.first + t * t * Q2.first,
+								u * u * Q0.second + 2 * u * t * Q1.second + t * t * Q2.second };
+				px.push_back(pt.first);
+				py.push_back(pt.second);
+			}
+			ImPlot::PlotLine("Best Fit Parabola", px.data(), py.data(), static_cast<int>(px.size()));
+		}
 
 		ImPlot::EndPlot();
 	}

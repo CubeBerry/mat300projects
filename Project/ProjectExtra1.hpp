@@ -3,12 +3,14 @@
 
 #include "GameState.hpp"
 
+using Point = std::pair<double, double>;
+
 struct HermitePoint
 {
 	// control points
-	std::pair<double, double> p;
+	Point p;
 	// tangent vectors
-	std::pair<double, double> t;
+	Point t;
     bool isShowTangent;
 };
 
@@ -26,7 +28,7 @@ public:
 private:
     std::vector<HermitePoint> controlPoints;
 
-	std::pair<double, double> HermiteInterpolation(double t) const
+	Point HermiteInterpolation(double t) const
 	{
 		size_t n = controlPoints.size();
 		if (n < 2) return { 0.0, 0.0 };
