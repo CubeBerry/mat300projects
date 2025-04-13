@@ -32,9 +32,19 @@ void ProjectExtra2::ImGuiDraw(float /*dt*/)
 	ImGui::SameLine();
 	if (ImGui::SmallButton("-"))
 	{
-		if (controlPoints.size() > 2)
+		if (isParabola)
 		{
-			controlPoints.erase(controlPoints.end() - 1);
+			if (controlPoints.size() > 3)
+			{
+				controlPoints.erase(controlPoints.end() - 1);
+			}
+		}
+		else
+		{
+			if (controlPoints.size() > 2)
+			{
+				controlPoints.erase(controlPoints.end() - 1);
+			}
 		}
 	}
 	ImGui::SameLine();
