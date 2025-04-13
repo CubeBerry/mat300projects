@@ -104,8 +104,8 @@ void ProjectExtra2::ImGuiDraw(float /*dt*/)
 			{
 				double t = static_cast<double>(n) / (resolution - 1);
 				double u = 1 - t;
-				Point pt = { u * u * Q0.first + 2 * u * t * Q1.first + t * t * Q2.first,
-								u * u * Q0.second + 2 * u * t * Q1.second + t * t * Q2.second };
+				Point pt = { u * u * Q0.first + 2.0 * u * t * Q1.first + t * t * Q2.first,
+								u * u * Q0.second + 2.0 * u * t * Q1.second + t * t * Q2.second };
 				px.push_back(pt.first);
 				py.push_back(pt.second);
 			}

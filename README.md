@@ -58,3 +58,10 @@
 5. Click one of control points on the menu right next to the graph to open menu.
 6. Click Toggle ShowTangent to show / off tangent point (green circle).
 7. Adjust x and y position of tangent by dragging scalar or green circle.
+
+## Extra Credit II
+1. A working executable is MAT300Projects.exe in "Executable" folder.
+2. Drag white circle to control points.
+3. Click + / - buttons to add or remove control points.
+4. Click Best Fit Line / Best Fit Parabola on the top-left side of the graph window to show / hide each graph.
+5. Click Show Parabola checkbox to toggle between Line and Parabola.
