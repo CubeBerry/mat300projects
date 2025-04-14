@@ -24,7 +24,7 @@ private:
 		{ 0.5, 0.5 },
 	};
 	std::vector<double> knotSequence;
-	double t{ 3.0 };
+	double shellT{ 3.0 };
 
 	void UpdateKnotSequence()
 	{
@@ -37,8 +37,8 @@ private:
 		}
 		double tMin{ knotSequence[degree] };
 		double tMax{ knotSequence[N - degree] };
-		if (t < tMin) t = tMin;
-		if (t > tMax) t = tMax;
+		if (shellT < tMin) shellT = tMin;
+		if (shellT > tMax) shellT = tMax;
 	}
 
 	std::pair<double, double> DeBoor(double t) const

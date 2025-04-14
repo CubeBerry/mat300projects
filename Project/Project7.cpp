@@ -98,51 +98,41 @@ void Project7::ImGuiDraw(float /*dt*/)
 
 		// Bezier Curve
 		int resolution{ 200 };
-		std::vector<std::pair<double, double>> curvePoints;
-		switch (method)
+		std::vector<double> dcxs, dcys;
+		int s = static_cast<int>(controlPoints.size()) - 1;
+		int N = s + degree + 1;
+		double tMin{ knotSequence[degree] };
+		double tMax{ knotSequence[N - degree] };
+		for (int n = 0; n < resolution; ++n)
 		{
-		case METHOD::NLI:
-		{
-			for (int n = 0; n < resolution; ++n)
-			{
-				double t = static_cast<double>(n) / (resolution - 1);
-				curvePoints.push_back(DeCasteljau(t));
-			}
-
-			std::vector<std::vector<std::pair<double, double>>> shells = DeCasteljauShells(static_cast<double>(shellT));
-			for (size_t i = 0; i < shells.size(); ++i)
-			{
-				std::vector<double> sx, sy;
-				for (auto& s : shells[i])
-				{
-					sx.push_back(s.first);
-					sy.push_back(s.second);
-				}
-
-				ImPlot::PlotLine("Shell", sx.data(), sy.data(), static_cast<int>(sx.size()));
-				ImPlot::PlotScatter("Shell", sx.data(), sy.data(), static_cast<int>(sx.size()));
-			}
+			double t = tMin + (tMax - tMin) * n / (resolution - 1);
+			dcxs.push_back(DeBoor(t).first);
+			dcys.push_back(DeBoor(t).second);
 		}
-		break;
-		case METHOD::BB:
-			for (int n = 0; n < resolution; ++n)
-			{
-				double t = static_cast<double>(n) / (resolution - 1);
-				curvePoints.push_back(BBForm(t));
-			}
-			break;
-		case METHOD::MIDPOINT:
-			curvePoints = MidpointSubdivision(controlPoints, 10);
-			break;
-		}
+		// De Boor Polyline
+		ImPlot::PlotLine("De Boor Polyline", dcxs.data(), dcys.data(), static_cast<int>(dcxs.size()));
 
-		std::vector<double> cx, cy;
-		for (const auto& p : curvePoints)
-		{
-			cx.push_back(p.first);
-			cy.push_back(p.second);
-		}
-		ImPlot::PlotLine("Bezier Curve", cx.data(), cy.data(), static_cast<int>(cx.size()));
+		//std::vector<std::vector<std::pair<double, double>>> shells = DeCasteljauShells(static_cast<double>(shellT));
+		//for (size_t i = 0; i < shells.size(); ++i)
+		//{
+		//	std::vector<double> sx, sy;
+		//	for (auto& s : shells[i])
+		//	{
+		//		sx.push_back(s.first);
+		//		sy.push_back(s.second);
+		//	}
+
+		//	ImPlot::PlotLine("Shell", sx.data(), sy.data(), static_cast<int>(sx.size()));
+		//	ImPlot::PlotScatter("Shell", sx.data(), sy.data(), static_cast<int>(sx.size()));
+		//}
+
+		//std::vector<double> cx, cy;
+		//for (const auto& p : curvePoints)
+		//{
+		//	cx.push_back(p.first);
+		//	cy.push_back(p.second);
+		//}
+		//ImPlot::PlotLine("Bezier Curve", cx.data(), cy.data(), static_cast<int>(cx.size()));
 
 		ImPlot::EndPlot();
 	}
