@@ -94,7 +94,7 @@ private:
 		}
 	}
 
-	std::pair<double, double> DeBoor(double t)
+	std::pair<double, double> DeBoor(double t) const
 	{
 		int d = static_cast<int>(deBoorControlPoints.size()) - 1;
 		if (d < 0) return { 0.0, 0.0 };

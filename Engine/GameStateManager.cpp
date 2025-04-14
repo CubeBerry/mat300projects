@@ -223,6 +223,8 @@ const char* GameStateManager::GameLevelTypeEnumToChar(GameLevel type)
 		return "PROJECT5";
 	case GameLevel::PROJECT6:
 		return "PROJECT6";
+	case GameLevel::PROJECT7:
+		return "PROJECT7";
 	case GameLevel::EXTRA1:
 		return "EXTRA1";
 	case GameLevel::EXTRA2:

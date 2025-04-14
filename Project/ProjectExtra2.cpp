@@ -6,9 +6,9 @@
 void ProjectExtra2::Init()
 {
 	controlPoints.clear();
-	controlPoints.push_back({ 0.2, 0.7 });
-	controlPoints.push_back({ 0.5, 0.3 });
-	controlPoints.push_back({ 0.8, 0.8 });
+	controlPoints.emplace_back(0.2, 0.7);
+	controlPoints.emplace_back(0.5, 0.3);
+	controlPoints.emplace_back(0.8, 0.8);
 }
 
 void ProjectExtra2::Update(float /*dt*/)
@@ -50,7 +50,7 @@ void ProjectExtra2::ImGuiDraw(float /*dt*/)
 	ImGui::SameLine();
 	if (ImGui::SmallButton("+"))
 	{
-		controlPoints.push_back({ 0.5, 0.5 });
+		controlPoints.emplace_back(0.5, 0.5);
 	}
 	ImGui::SameLine();
 	// Toggle Parabola
