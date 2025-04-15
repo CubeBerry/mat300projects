@@ -115,8 +115,9 @@ void Project7::ImGuiDraw(float /*dt*/)
 		for (int n = 0; n < resolution; ++n)
 		{
 			double t = tMin + (tMax - tMin) * n / (resolution - 1);
-			dcxs.push_back(DeBoor(t).first);
-			dcys.push_back(DeBoor(t).second);
+			std::pair<double, double> value = DeBoor(t);
+			dcxs.push_back(value.first);
+			dcys.push_back(value.second);
 		}
 		// De Boor Polyline
 		ImPlot::PlotLine("De Boor Polyline", dcxs.data(), dcys.data(), static_cast<int>(dcxs.size()));

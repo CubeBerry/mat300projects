@@ -59,28 +59,28 @@ private:
 		}
 		if (t >= knotSequence[N - degree]) J = s;
 
-		int offset = J - degree;
+		//int offset = J - degree;
 
-		std::vector<std::pair<double, double>> P(degree + 1);
-		for (int i = 0; i <= degree; ++i)
+		std::vector<std::pair<double, double>> P(s + 1);
+		for (int i = 0; i <= s; ++i)
 		{
-			P[i] = controlPoints[offset + i];
+			P[i] = controlPoints[i];
 		}
 
 		for (int p = 1; p <= degree; ++p)
 		{
-			for (int i = degree; i >= p; --i)
+			for (int i = J - degree + p; i <= J; ++i)
 			{
 				// i + d - p + 1 - i == d - p + 1
-				double denominator = knotSequence[offset + i + degree - p + 1] - knotSequence[offset + i];
-				double alpha = (t - knotSequence[offset + i]) / denominator;
-				double beta = (knotSequence[offset + i + degree - p + 1] - t) / denominator;
+				double denominator = knotSequence[i + degree - p + 1] - knotSequence[i];
+				double alpha = (t - knotSequence[i]) / denominator;
+				double beta = (knotSequence[i + degree - p + 1] - t) / denominator;
 				//c[i] = alpha * c[i - 1] + beta * c[i];
 				P[i].first = alpha * P[i].first + beta * P[i - 1].first;
 				P[i].second = alpha * P[i].second + beta * P[i - 1].second;
 			}
 		}
 
-		return P[degree];
+		return P[J];
 	}
 };
