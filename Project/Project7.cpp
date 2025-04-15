@@ -25,7 +25,7 @@ void Project7::ImGuiDraw(float /*dt*/)
 	ImGui::SameLine();
 	ImGui::Text(std::to_string(controlPoints.size()).c_str());
 	ImGui::SameLine();
-	if (ImGui::SmallButton("-"))
+	if (ImGui::SmallButton("-CP"))
 	{
 		if (controlPoints.size() > static_cast<size_t>(degree) + 1)
 		{
@@ -34,7 +34,7 @@ void Project7::ImGuiDraw(float /*dt*/)
 		}
 	}
 	ImGui::SameLine();
-	if (ImGui::SmallButton("+"))
+	if (ImGui::SmallButton("+CP"))
 	{
 		if (controlPoints.size() < 20)
 		{
@@ -47,16 +47,17 @@ void Project7::ImGuiDraw(float /*dt*/)
 	ImGui::Text("Degree:");
 	ImGui::SameLine();
 	ImGui::Text(std::to_string(degree).c_str());
-	if (ImGui::SmallButton("-"))
+	ImGui::SameLine();
+	if (ImGui::SmallButton("-D"))
 	{
-		if (degree > 0)
+		if (degree > 1)
 		{
 			degree--;
 			UpdateKnotSequence();
 		}
 	}
 	ImGui::SameLine();
-	if (ImGui::SmallButton("+"))
+	if (ImGui::SmallButton("+D"))
 	{
 		if (degree < 20)
 		{
@@ -64,6 +65,14 @@ void Project7::ImGuiDraw(float /*dt*/)
 			UpdateKnotSequence();
 		}
 	}
+	// Knot Sequence
+	std::ostringstream oss;
+	for (size_t i = 0; i < knotSequence.size(); ++i)
+	{
+		oss << knotSequence[i];
+		if (i != knotSequence.size() - 1) oss << ", ";
+	}
+	ImGui::TextWrapped("Knot Sequence: %s", oss.str().c_str());
 	//ImGui::SetNextItemWidth(200.f);
 	//ImGui::SliderFloat("t-value", reinterpret_cast<float*>(&t), 0.f, 1.f, "%.2f");
 
