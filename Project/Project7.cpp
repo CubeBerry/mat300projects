@@ -59,7 +59,7 @@ void Project7::ImGuiDraw(float /*dt*/)
 	ImGui::SameLine();
 	if (ImGui::SmallButton("+D"))
 	{
-		if (degree < 20)
+		if (degree < static_cast<int>(controlPoints.size()) - 1)
 		{
 			degree++;
 			UpdateKnotSequence();
