@@ -24,7 +24,7 @@ private:
 		{ 0.5, 0.5 },
 	};
 	std::vector<double> knotSequence;
-	float shellT{ 3.f };
+	float shellT{ 3.5f };
 
 	void UpdateKnotSequence()
 	{

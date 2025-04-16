@@ -31,6 +31,7 @@ void Project7::ImGuiDraw(float /*dt*/)
 		{
 			controlPoints.erase(controlPoints.end() - 1);
 			UpdateKnotSequence();
+			shellT = (static_cast<float>(degree) + static_cast<float>(controlPoints.size())) / 2.f;
 		}
 	}
 	ImGui::SameLine();
@@ -40,6 +41,7 @@ void Project7::ImGuiDraw(float /*dt*/)
 		{
 			controlPoints.emplace_back(0.5, 0.5);
 			UpdateKnotSequence();
+			shellT = (static_cast<float>(degree) + static_cast<float>(controlPoints.size())) / 2.f;
 		}
 	}
 	ImGui::SameLine();
@@ -54,6 +56,7 @@ void Project7::ImGuiDraw(float /*dt*/)
 		{
 			degree--;
 			UpdateKnotSequence();
+			shellT = (static_cast<float>(degree) + static_cast<float>(controlPoints.size())) / 2.f;
 		}
 	}
 	ImGui::SameLine();
@@ -63,6 +66,7 @@ void Project7::ImGuiDraw(float /*dt*/)
 		{
 			degree++;
 			UpdateKnotSequence();
+			shellT = (static_cast<float>(degree) + static_cast<float>(controlPoints.size())) / 2.f;
 		}
 	}
 	ImGui::SameLine();
