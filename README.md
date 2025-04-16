@@ -52,7 +52,7 @@
 
 ## Project 7
 1. A working executable is MAT300Projects.exe in "Executable" folder.
-2. Drag white (or green if circles are overlapped) circle to control points.
+2. Drag white circle to control points.
 3. Click +CP / -CP buttons to add or remove control points.
 4. Click +D / -D buttons to add or remove degree.
 5. Slide t-value to control t value which control shells
